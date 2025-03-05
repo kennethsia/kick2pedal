@@ -29,16 +29,19 @@ export async function fetchClient<T>(
     revalidate,
   } = options;
   try {
-    const response = await fetch(`http://127.0.0.1:1337/api${endpoint}`, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
+    const response = await fetch(
+      `${process.env.STRAPI_BASE_URL}/api${endpoint}`,
+      {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+        body: body ? JSON.stringify(body) : undefined,
+        cache,
+        next: revalidate ? { revalidate } : undefined,
       },
-      body: body ? JSON.stringify(body) : undefined,
-      cache,
-      next: revalidate ? { revalidate } : undefined,
-    });
+    );
 
     return response.json();
   } catch (error) {
