@@ -26,10 +26,7 @@ export default async function Events() {
             <Card key={event.id}>
               <div className="relative aspect-[4/5] w-full">
                 <Image
-                  src={
-                    `${process.env.STRAPI_BASE_URL}${event.image?.url}` ||
-                    '/placeholder-event.jpg'
-                  }
+                  src={`${event.image?.url}` || '/placeholder-event.jpg'}
                   alt={event.title}
                   fill
                   className="object-cover"

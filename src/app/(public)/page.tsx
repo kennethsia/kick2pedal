@@ -24,10 +24,7 @@ export default async function Home() {
           <Card key={event.id} className="overflow-hidden">
             <div className="relative aspect-[21/9] w-full">
               <Image
-                src={
-                  `${process.env.STRAPI_BASE_URL}${event.image?.url}` ||
-                  '/placeholder-event.jpg'
-                }
+                src={`${event.image?.url}` || '/placeholder-event.jpg'}
                 alt={event.title}
                 fill
                 className="object-cover"
