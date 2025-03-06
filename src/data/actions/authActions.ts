@@ -5,6 +5,14 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { api } from '@/lib/apiClient';
 
+const MAX_FILE_SIZE = 5000000; // 5MB
+const ACCEPTED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+];
+
 const config = {
   maxAge: 60 * 60 * 24 * 7, // 1 week
   path: '/',
@@ -14,6 +22,7 @@ const config = {
 };
 
 const schemaRegister = z.object({
+  // Account details
   username: z.string().min(3).max(20, {
     message: 'Username must be between 3 and 20 characters',
   }),
@@ -23,13 +32,68 @@ const schemaRegister = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address',
   }),
+
+  // Personal information
+  firstName: z.string().min(1, { message: 'First name is required' }),
+  middleName: z.string().optional(),
+  lastName: z.string().min(1, { message: 'Last name is required' }),
+  nickname: z.string().optional(),
+  dateOfBirth: z.string().min(1, { message: 'Date of birth is required' }),
+  birthGender: z.enum(['M', 'F'], {
+    required_error: 'Please select a gender',
+  }),
+  parentFullName: z
+    .string()
+    .min(1, { message: 'Parent/Guardian name is required' }),
+  contactNumber: z.string().min(1, { message: 'Contact number is required' }),
+
+  // Additional details
+  plateNumber: z.string().optional(),
+  teamName: z.string().optional(),
+  riderType: z.enum(['FILIPINO', 'FOREIGN'], {
+    required_error: 'Please select rider type',
+  }),
+  foreignCountry: z.string().optional(),
+
+  // Files
+  // racerPhoto: z
+  //   .any()
+  //   .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+  //   .refine(
+  //     (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+  //     'Only .jpg, .jpeg, .png and .webp formats are supported.',
+  //   ),
+  // identificationDocument: z
+  //   .any()
+  //   .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`),
 });
 
 export async function registerUserAction(prevState: any, formData: FormData) {
+  // Extract file data
+  // const racerPhoto = formData.get('racerPhoto') as File;
+  // const identificationDocument = formData.get(
+  //   'identificationDocument',
+  // ) as File;
+
+  // Validate form data
   const validatedFields = schemaRegister.safeParse({
     username: formData.get('username'),
     password: formData.get('password'),
     email: formData.get('email'),
+    firstName: formData.get('firstName'),
+    middleName: formData.get('middleName'),
+    lastName: formData.get('lastName'),
+    nickname: formData.get('nickname'),
+    dateOfBirth: formData.get('dateOfBirth'),
+    birthGender: formData.get('birthGender'),
+    parentFullName: formData.get('parentFullName'),
+    contactNumber: formData.get('contactNumber'),
+    plateNumber: formData.get('plateNumber'),
+    teamName: formData.get('teamName'),
+    riderType: formData.get('riderType'),
+    foreignCountry: formData.get('foreignCountry'),
+    // racerPhoto,
+    // identificationDocument,
   });
 
   if (!validatedFields.success) {
@@ -40,6 +104,18 @@ export async function registerUserAction(prevState: any, formData: FormData) {
       message: 'Missing Fields. Failed to Register.',
     };
   }
+
+  // Create FormData for file upload
+  // const formDataToSend = new FormData();
+  // Object.entries(validatedFields.data).forEach(([key, value]) => {
+  //   if (key === 'racerPhoto' || key === 'identificationDocument') {
+  //     formDataToSend.append(key, value as File);
+  //   } else {
+  //     formDataToSend.append(key, value as string);
+  //   }
+  // });
+  console.log(validatedFields);
+  // console.log(formDataToSend);
 
   const responseData = await api.user.signup(validatedFields.data);
 

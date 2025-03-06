@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -9,51 +10,63 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { CalendarIcon, MapPinIcon, UsersIcon } from 'lucide-react';
 import { api } from '@/lib/apiClient';
+import Link from 'next/link';
 
 export default async function Home() {
   const { data: events } = await api.events.list();
-  console.log(events);
 
   return (
-    <div className="min-h-screen p-8">
-      <main className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Upcoming Events</h1>
+    <>
+      <h1 className="text-3xl font-bold mb-8">Upcoming Events</h1>
 
-        <div className="grid gap-6">
-          {events.map((event: any) => (
-            <Card key={event.id}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl">{event.title}</CardTitle>
-                    <CardDescription className="mt-2">
-                      {event.description}
-                    </CardDescription>
-                  </div>
-                  <Button>Register</Button>
+      <div className="grid gap-6">
+        {events.map((event: any) => (
+          <Card key={event.id} className="overflow-hidden">
+            <div className="relative aspect-[21/9] w-full">
+              <Image
+                src={
+                  `${process.env.STRAPI_BASE_URL}${event.image?.url}` ||
+                  '/placeholder-event.jpg'
+                }
+                alt={event.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div>
+                  <CardTitle className="text-xl">{event.title}</CardTitle>
+                  <CardDescription className="mt-2">
+                    {event.description}
+                  </CardDescription>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <Separator className="my-4" />
-                <div className="flex gap-6 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <MapPinIcon className="h-4 w-4" />
-                    <span>{event.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
+                <Link href={`/events/${event.documentId}`}>
+                  <Button size="lg">Register</Button>
+                </Link>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Separator className="my-4" />
+              <div className="flex gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="h-4 w-4" />
+                  <span>{event.location}</span>
+                </div>
+                {/* <div className="flex items-center gap-2">
                     <UsersIcon className="h-4 w-4" />
                     <span>{event.maxCapacity} spots</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CalendarIcon className="h-4 w-4" />
-                    <span>{new Date(event.date).toLocaleDateString()}</span>
-                  </div>
+                  </div> */}
+                <div className="flex items-center gap-2">
+                  <CalendarIcon className="h-4 w-4" />
+                  <span>{new Date(event.date).toLocaleDateString()}</span>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </main>
-    </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </>
   );
 }

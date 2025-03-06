@@ -6,7 +6,6 @@ export async function getUserMeLoader() {
   const url = new URL('/users/me', baseUrl);
 
   const authToken = await getAuthToken();
-  console.log(authToken);
   if (!authToken) return { ok: false, data: null, error: null };
 
   try {
@@ -21,7 +20,6 @@ export async function getUserMeLoader() {
       },
     );
     const data = await response.json();
-    console.log(data);
     if (data.error) return { ok: false, data: null, error: data.error };
     return { ok: true, data: data, error: null };
   } catch (error) {

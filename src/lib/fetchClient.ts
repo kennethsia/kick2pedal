@@ -30,7 +30,7 @@ export async function fetchClient<T>(
   } = options;
   try {
     const response = await fetch(
-      `${process.env.STRAPI_BASE_URL}/api${endpoint}`,
+      `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api${endpoint}`,
       {
         method,
         headers: {

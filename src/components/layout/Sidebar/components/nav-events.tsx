@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 
-export function NavMain({
+export function NavEvent({
   items,
 }: {
   items: {
@@ -30,7 +30,7 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Home</SidebarGroupLabel>
+      <SidebarGroupLabel>Events</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>

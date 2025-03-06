@@ -1,8 +1,8 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 import Image from 'next/image';
 import { LoginForm } from '@/components/LoginForm';
-import Poster from '@/public/victors-cup-poster.jpg';
-import Logo from '@/public/k2p-logo.jpg';
+import Poster from '@/public/k2p-logo-removebg-preview.png';
+import Logo from '@/public/kick2pedal-word-logo_360x.png';
 
 export default function LoginPage() {
   return (
@@ -10,7 +10,7 @@ export default function LoginPage() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="#" className="flex items-center gap-2 font-medium">
-            <div className="flex h-32 w-32 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <div className="flex h-32 w-32 items-center justify-center rounded-md text-primary-foreground">
               <Image src={Logo} alt="Authentication background" priority />
             </div>
           </a>

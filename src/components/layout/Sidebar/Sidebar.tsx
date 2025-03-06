@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 
 import { NavMain } from '@/components/layout/Sidebar/components/nav-main';
+import { NavEvent } from '@/components/layout/Sidebar/components/nav-events';
 import { NavUser } from '@/components/layout/Sidebar/components/nav-user';
 import { TeamSwitcher } from '@/components/layout/Sidebar/components/team-switcher';
 import {
@@ -30,7 +31,8 @@ import {
 } from '@/components/ui/sidebar';
 
 import Image from 'next/image';
-import Logo from '@/public/k2p-logo.jpg';
+import Logo from '@/public/k2p-logo-removebg-preview.png';
+import Link from 'next/link';
 
 // This is sample data.
 const data = {
@@ -79,11 +81,11 @@ const data = {
     },
   ],
   navEvents: [
-    {
-      title: 'My events',
-      url: '/my-events',
-      icon: CalendarPlus,
-    },
+    // {
+    //   title: 'My events',
+    //   url: '/my-events',
+    //   icon: CalendarPlus,
+    // },
     {
       title: 'All events',
       url: '/events',
@@ -101,11 +103,13 @@ export function AppSidebar({ user }: { user: any }) {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <Image src={Logo} alt="Authentication background" priority />
+        <Link href="/dashboard">
+          <Image src={Logo} alt="Authentication background" priority />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavMain items={data.navEvents} />
+        <NavEvent items={data.navEvents} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

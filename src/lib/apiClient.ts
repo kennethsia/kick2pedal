@@ -10,11 +10,83 @@ interface Event {
   maxCapacity?: number;
 }
 
+// Define the possible enum values
+type RegistrationStatus = 'registered' | 'waitlisted' | 'confirmed';
+
+type BikeBrand =
+  | 'PAPA_BIKE'
+  | 'BIKE8'
+  | 'XPUSH'
+  | 'MARU'
+  | 'CISCO'
+  | 'ROCKFISH'
+  | 'ZOOMI'
+  | 'OTHERS';
+
+type WheelsetBrand =
+  | 'DATI'
+  | 'MOSTSPORT'
+  | 'SKAIDI'
+  | 'GIPSY'
+  | 'ROCKFISH'
+  | 'FU_JIN'
+  | 'TOMORROW'
+  | 'OTHERS';
+
+interface Category {
+  id: number;
+  name: string;
+  description?: string;
+}
+
+interface Registration {
+  additional_category_2?:
+    | {
+        connect: any[];
+      }
+    | undefined;
+  additional_category_1?:
+    | {
+        connect: any[];
+      }
+    | undefined;
+  registration_status: 'registered';
+  event: {
+    connect: any[];
+  };
+  user: {
+    connect: any[];
+  };
+  bikeBrand: BikeBrand;
+  wheelsetBrand: WheelsetBrand;
+  category: {
+    connect: any[];
+  };
+}
+
 interface RegisterUser {
   username: string;
   password: string;
   email: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  nickname?: string;
+  dateOfBirth: string;
+  birthGender: 'M' | 'F';
+  parentFullName: string;
+  contactNumber: string;
+  plateNumber?: string;
+  teamName?: string;
+  riderType: 'FILIPINO' | 'FOREIGN';
+  foreignCountry?: string;
+  racerPhoto?: any;
+  identificationDocument?: any;
 }
+
+type RegisterationCreateType = {
+  data: Registration;
+};
 
 interface LoginUser {
   identifier: string;
@@ -41,9 +113,17 @@ export const api = {
       }),
   },
 
+  registration: {
+    create: (data: RegisterationCreateType) =>
+      fetchClient<Registration>('/registrations', {
+        method: 'POST',
+        body: data,
+      }),
+  },
+
   events: {
-    list: () => fetchClient<Event[]>('/events'),
-    get: (id: string) => fetchClient<Event>(`/events/${id}`),
+    list: () => fetchClient<Event[]>('/events?populate=*'),
+    get: (id: string) => fetchClient<Event>(`/events/${id}?populate=*`),
     create: (data: Omit<Event, 'id'>) =>
       fetchClient<Event>('/events', { method: 'POST', body: data }),
     update: (id: string, data: Partial<Event>) =>

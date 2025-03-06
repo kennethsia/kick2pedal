@@ -5,12 +5,26 @@ import { getUserMeLoader } from '@/data/services/getUserMeLoader';
 // Define an array of protected routes
 const protectedRoutes = [
   '/dashboard',
+  '/events',
+  '/events/',
+  '/rules-and-regulations',
   // Add more protected routes here
 ];
 
 // Helper function to check if a path is protected
 function isProtectedRoute(path: string): boolean {
-  return protectedRoutes.some((route) => path.startsWith(route));
+  // Check exact matches first
+  if (protectedRoutes.includes(path)) {
+    return true;
+  }
+
+  // Check dynamic routes
+  const eventRegex = /^\/events\/[\w-]+/; // Matches /events/{anything}
+  if (eventRegex.test(path)) {
+    return true;
+  }
+
+  return false;
 }
 
 export async function middleware(request: NextRequest) {
