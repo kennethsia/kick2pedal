@@ -40,27 +40,40 @@ interface Category {
 }
 
 interface Registration {
-  additional_category_2?:
-    | {
-        connect: any[];
-      }
-    | undefined;
-  additional_category_1?:
-    | {
-        connect: any[];
-      }
-    | undefined;
-  registration_status: 'registered';
-  event: {
-    connect: any[];
-  };
-  user: {
-    connect: any[];
-  };
+  registration_status: RegistrationStatus;
+  event: any;
+  user: any;
+  category: any;
+  additional_category_1?: any;
+  additional_category_2?: any;
   bikeBrand: BikeBrand;
   wheelsetBrand: WheelsetBrand;
-  category: {
-    connect: any[];
+}
+
+interface RegistrationCreate {
+  data: {
+    additional_category_2?:
+      | {
+          connect: any[];
+        }
+      | undefined;
+    additional_category_1?:
+      | {
+          connect: any[];
+        }
+      | undefined;
+    registration_status: 'registered';
+    event: {
+      connect: any[];
+    };
+    user: {
+      connect: any[];
+    };
+    bikeBrand: BikeBrand;
+    wheelsetBrand: WheelsetBrand;
+    category: {
+      connect: any[];
+    };
   };
 }
 
@@ -83,10 +96,6 @@ interface RegisterUser {
   racerPhoto?: any;
   identificationDocument?: any;
 }
-
-type RegisterationCreateType = {
-  data: Registration;
-};
 
 interface LoginUser {
   identifier: string;
@@ -114,11 +123,15 @@ export const api = {
   },
 
   registration: {
-    create: (data: RegisterationCreateType) =>
-      fetchClient<Registration>('/registrations', {
+    create: (data: RegistrationCreate) =>
+      fetchClient<RegistrationCreate>('/registrations', {
         method: 'POST',
         body: data,
       }),
+    list: (id: string) =>
+      fetchClient<Registration[]>(
+        `/registrations?filters[user][documentId][$eq]=${id}&populate=*`,
+      ),
   },
 
   events: {

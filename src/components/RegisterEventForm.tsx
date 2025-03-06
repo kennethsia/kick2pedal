@@ -158,6 +158,7 @@ export function RegisterEventForm({ event, user }: RegisterEventFormProps) {
     const input = {
       data: {
         registration_status: 'registered' as const,
+        amount: data.amount,
         // Connect relations using 'connect' array
         event: {
           connect: [event.documentId],
