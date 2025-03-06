@@ -39,6 +39,9 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
+import { Menu } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Separator } from './ui/separator';
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
@@ -165,59 +168,129 @@ export default function Navigation() {
       <Link href="/">
         <Image src={Logo} alt="Logo" width={150} />
       </Link>
-      <NavigationMenu>
-        <NavigationMenuList>
-          {mainNav.map((item) => {
-            const Icon = item.icon;
 
-            if (!item.items) {
+      {/* Desktop Navigation */}
+      <div className="hidden md:block">
+        <NavigationMenu>
+          <NavigationMenuList>
+            {mainNav.map((item) => {
+              const Icon = item.icon;
+
+              if (!item.items) {
+                return (
+                  <NavigationMenuItem key={item.href}>
+                    <Link href={item.href} legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          'gap-2',
+                          pathname === item.href &&
+                            'bg-accent text-accent-foreground',
+                        )}
+                      >
+                        {Icon && <Icon className="h-4 w-4" />}
+                        {item.title}
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                );
+              }
+
               return (
                 <NavigationMenuItem key={item.href}>
-                  <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink
+                  <NavigationMenuTrigger className="gap-2">
+                    {Icon && <Icon className="h-4 w-4" />}
+                    {item.title}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                      {item.items.map((subItem) => (
+                        <ListItem
+                          key={subItem.href}
+                          href={subItem.href}
+                          title={subItem.title}
+                          icon={subItem.icon}
+                        >
+                          {subItem.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              );
+            })}
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+
+      {/* Desktop Login Button */}
+      <div className="hidden md:block">
+        <Button size="lg" asChild>
+          <Link href="/login">Log In</Link>
+        </Button>
+      </div>
+
+      {/* Mobile Menu */}
+      <div className="md:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <div className="flex flex-col gap-4 py-4">
+              {mainNav.map((item) => {
+                const Icon = item.icon;
+
+                if (!item.items) {
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
                       className={cn(
-                        navigationMenuTriggerStyle(),
-                        'gap-2',
+                        'flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground',
                         pathname === item.href &&
                           'bg-accent text-accent-foreground',
                       )}
                     >
                       {Icon && <Icon className="h-4 w-4" />}
                       {item.title}
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              );
-            }
+                    </Link>
+                  );
+                }
 
-            return (
-              <NavigationMenuItem key={item.href}>
-                <NavigationMenuTrigger className="gap-2">
-                  {Icon && <Icon className="h-4 w-4" />}
-                  {item.title}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                    {item.items.map((subItem) => (
-                      <ListItem
-                        key={subItem.href}
-                        href={subItem.href}
-                        title={subItem.title}
-                        icon={subItem.icon}
-                      >
-                        {subItem.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            );
-          })}
-        </NavigationMenuList>
-      </NavigationMenu>
-      <Button size="lg" asChild>
-        <Link href="/login">Log In</Link>
-      </Button>
+                return (
+                  <div key={item.href} className="space-y-2">
+                    <div className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
+                      {Icon && <Icon className="h-4 w-4" />}
+                      {item.title}
+                    </div>
+                    <div className="pl-4 space-y-1">
+                      {item.items.map((subItem) => (
+                        <Link
+                          key={subItem.href}
+                          href={subItem.href}
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground"
+                        >
+                          {subItem.icon && <subItem.icon className="h-4 w-4" />}
+                          {subItem.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+
+              <Separator className="my-2" />
+
+              <Button size="lg" asChild className="w-full">
+                <Link href="/login">Log In</Link>
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
     </nav>
   );
 }
