@@ -86,22 +86,22 @@ export default function Navigation() {
     },
     {
       title: 'About',
-      href: '/about',
+      href: '/about-us',
       icon: Info,
       items: [
         {
           title: 'Who we are',
-          href: '/about',
+          href: '/about-us',
           description: 'Learn about our story and values',
         },
         {
           title: 'Mission and Vision',
-          href: '/about/mission',
+          href: '/about-us',
           description: 'Our goals and what drives us',
         },
         {
           title: 'Our Partners',
-          href: '/about/partners',
+          href: '/about-us',
           description: 'Meet our trusted partners',
         },
         {
@@ -119,44 +119,44 @@ export default function Navigation() {
       items: [
         {
           title: 'Push Bikes',
-          href: '/store/push-bikes',
-          items: [
-            { title: '12"', href: '/store/push-bikes/12' },
-            { title: '14"', href: '/store/push-bikes/14' },
-          ],
+          href: '/store',
+          // items: [
+          //   { title: '12"', href: '/store/push-bikes/12' },
+          //   { title: '14"', href: '/store/push-bikes/14' },
+          // ],
         },
         {
           title: 'Parts & Accessories',
-          href: '/store/parts',
-          items: [
-            { title: 'Wheelsets', href: '/store/parts/wheelsets' },
-            { title: 'Helmets & Protection', href: '/store/parts/protection' },
-            { title: 'Parts', href: '/store/parts/other' },
-          ],
+          href: '/store',
+          // items: [
+          //   { title: 'Wheelsets', href: '/store/parts/wheelsets' },
+          //   { title: 'Helmets & Protection', href: '/store/parts/protection' },
+          //   { title: 'Parts', href: '/store/parts/other' },
+          // ],
         },
-        { title: 'Pedal Bikes', href: '/store/pedal-bikes' },
-        { title: 'Our Brands', href: '/store/brands' },
+        { title: 'Pedal Bikes', href: '/store' },
+        { title: 'Our Brands', href: '/store' },
       ],
     },
     {
       title: 'Races',
-      href: '/races',
+      href: '/',
       icon: Trophy,
       items: [
         {
           title: 'About our Races',
-          href: '/races/about',
+          href: '/',
           description: 'Learn about our racing events',
         },
         {
           title: '2025 Calendar',
-          href: '/races/calendar',
+          href: '/',
           description: 'View upcoming race schedule',
           icon: Calendar,
         },
         {
           title: 'Register for Race',
-          href: '/races/register',
+          href: '/',
           description: 'Sign up for upcoming races',
         },
       ],
@@ -173,12 +173,12 @@ export default function Navigation() {
       <div className="hidden md:block">
         <NavigationMenu>
           <NavigationMenuList>
-            {mainNav.map((item) => {
+            {mainNav.map((item, index) => {
               const Icon = item.icon;
 
               if (!item.items) {
                 return (
-                  <NavigationMenuItem key={item.href}>
+                  <NavigationMenuItem key={item.href + index}>
                     <Link href={item.href} legacyBehavior passHref>
                       <NavigationMenuLink
                         className={cn(
@@ -197,16 +197,16 @@ export default function Navigation() {
               }
 
               return (
-                <NavigationMenuItem key={item.href}>
+                <NavigationMenuItem key={item.href + index}>
                   <NavigationMenuTrigger className="gap-2">
                     {Icon && <Icon className="h-4 w-4" />}
                     {item.title}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                      {item.items.map((subItem) => (
+                      {item.items.map((subItem, index) => (
                         <ListItem
-                          key={subItem.href}
+                          key={subItem.href + index}
                           href={subItem.href}
                           title={subItem.title}
                           icon={subItem.icon}
@@ -240,13 +240,13 @@ export default function Navigation() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
             <div className="flex flex-col gap-4 py-4">
-              {mainNav.map((item) => {
+              {mainNav.map((item, index) => {
                 const Icon = item.icon;
 
                 if (!item.items) {
                   return (
                     <Link
-                      key={item.href}
+                      key={item.href + index}
                       href={item.href}
                       className={cn(
                         'flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground',
@@ -261,15 +261,15 @@ export default function Navigation() {
                 }
 
                 return (
-                  <div key={item.href} className="space-y-2">
+                  <div key={item.href + index} className="space-y-2">
                     <div className="flex items-center gap-2 px-4 py-2 text-sm font-medium">
                       {Icon && <Icon className="h-4 w-4" />}
                       {item.title}
                     </div>
                     <div className="pl-4 space-y-1">
-                      {item.items.map((subItem) => (
+                      {item.items.map((subItem, index) => (
                         <Link
-                          key={subItem.href}
+                          key={subItem.href + index}
                           href={subItem.href}
                           className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground"
                         >
