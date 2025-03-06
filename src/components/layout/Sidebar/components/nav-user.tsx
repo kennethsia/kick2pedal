@@ -33,8 +33,8 @@ export function NavUser({
 }: {
   user: {
     username: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
     avatar: string;
   };
@@ -42,7 +42,7 @@ export function NavUser({
   const { isMobile } = useSidebar();
 
   if (!user) return null;
-  const initials = getInitials(user?.firstname, user?.lastname);
+  const initials = getInitials(user?.firstName, user?.lastName);
 
   return (
     <SidebarMenu>
@@ -61,7 +61,7 @@ export function NavUser({
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {user.firstname} {user.lastname}
+                  {user.firstName} {user.lastName}
                 </span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>

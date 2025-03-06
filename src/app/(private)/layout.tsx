@@ -7,6 +7,8 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { getUserMeLoader } from '@/data/services/getUserMeLoader';
+import Logo from '@/public/kick2pedal-word-logo_360x.png';
+import Image from 'next/image';
 
 export default async function DashboardLayout({
   children,
@@ -23,6 +25,12 @@ export default async function DashboardLayout({
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
+            <Image
+              src={Logo}
+              alt="Authentication background"
+              priority
+              width="100"
+            />
             {/* <Breadcrumbs /> */}
           </div>
         </header>
