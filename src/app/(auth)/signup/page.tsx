@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import Logo from '@/public/kick2pedal-word-logo_360x.png';
 import { SignupForm } from '@/components/SignupForm';
+import Logo from '@/public/kick2pedal-word-logo_360x.png';
+import Image from 'next/image';
 
 export default function SignupPage() {
   return (

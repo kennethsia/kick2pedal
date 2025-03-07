@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
-import { api } from '@/lib/apiClient';
-import { RegisterEventForm } from '@/components/RegisterEventForm';
+import { RegisterEventFormV2 } from '@/components/RegisterEventFormV2';
 import { getUserMeLoader } from '@/data/services/getUserMeLoader';
+import { api } from '@/lib/apiClient';
+import { notFound } from 'next/navigation';
 
 export default async function RegisterPage({ params }: { params: any }) {
   // Remove await from params
@@ -23,7 +23,7 @@ export default async function RegisterPage({ params }: { params: any }) {
           Complete your registration details below
         </p>
       </div>
-      <RegisterEventForm event={event} user={user} />
+      <RegisterEventFormV2 event={event} user={user} />
     </div>
   );
 }

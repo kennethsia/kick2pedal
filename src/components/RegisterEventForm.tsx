@@ -1,17 +1,15 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from '@/components/ui/form';
 import {
   Select,
@@ -20,19 +18,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { useEffect, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
-import { api } from '@/lib/apiClient';
-import { getUserMeLoader } from '@/data/services/getUserMeLoader';
-import { QRCodeDialog } from './QRCodeDialog';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { QRCodeDialog } from './QRCodeDialog';
 
 const BikeBrands = [
   'PAPA_BIKE',
@@ -187,10 +179,8 @@ export function RegisterEventForm({ event, user }: RegisterEventFormProps) {
       },
     };
 
-    console.log(input);
-
-    const response = await api.registration.create(input);
-    if (response) router.push('/dashboard');
+    // const response = await api.registration.create(input);
+    // if (response) router.push('/dashboard');
     setIsSubmitting(false);
   }
 

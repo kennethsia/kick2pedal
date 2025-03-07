@@ -74,6 +74,7 @@ interface RegistrationCreate {
     category: {
       connect: any[];
     };
+    proofOfPayment: number;
   };
 }
 
@@ -120,6 +121,8 @@ export const api = {
         method: 'POST',
         body: data,
       }),
+    update: (id: string, data: Partial<RegisterUser>) =>
+      fetchClient<RegisterUser>(`/users/${id}`, { method: 'PUT', body: data }),
   },
 
   registration: {

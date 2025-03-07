@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { Store, Clock } from 'lucide-react';
+import { Clock, Store } from 'lucide-react';
 
 export default function StorePage() {
   return (

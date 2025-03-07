@@ -1,14 +1,8 @@
 'use client';
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from 'lucide-react';
+import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
 
+import { LogoutButton } from '@/components/LogoutButton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -26,7 +20,6 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { getInitials } from '@/lib/utils';
-import { LogoutButton } from '@/components/LogoutButton';
 
 export function NavUser({
   user,

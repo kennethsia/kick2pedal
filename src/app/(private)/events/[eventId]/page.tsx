@@ -1,7 +1,3 @@
-import { notFound } from 'next/navigation';
-import { Calendar, MapPin, Users } from 'lucide-react';
-import { api } from '@/lib/apiClient';
-import { Separator } from '@/components/ui/separator';
 import {
   Card,
   CardContent,
@@ -9,7 +5,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { api } from '@/lib/apiClient';
+import { Calendar, MapPin, Users } from 'lucide-react';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
 // Use the PageProps type for the component
 export default async function EventsPage({ params }: { params: any }) {

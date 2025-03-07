@@ -2,19 +2,18 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { CalendarIcon, MapPinIcon, UsersIcon } from 'lucide-react';
 import { api } from '@/lib/apiClient';
-import Link from 'next/link';
+import { CalendarIcon, MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Events() {
   const { data: events } = await api.events.list();
-  console.log(events);
 
   return (
     <div className="min-h-screen p-8">
@@ -24,7 +23,7 @@ export default async function Events() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {events.map((event: any) => (
             <Card key={event.id}>
-              <div className="relative aspect-[4/5] w-full">
+              <div className="relative aspect-[16/9] w-full">
                 <Image
                   src={`${event.image?.url}` || '/placeholder-event.jpg'}
                   alt={event.title}

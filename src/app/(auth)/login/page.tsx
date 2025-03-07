@@ -1,8 +1,7 @@
-import { GalleryVerticalEnd } from 'lucide-react';
-import Image from 'next/image';
 import { LoginForm } from '@/components/LoginForm';
 import Poster from '@/public/k2p-logo-removebg-preview.png';
 import Logo from '@/public/kick2pedal-word-logo_360x.png';
+import Image from 'next/image';
 
 export default function LoginPage() {
   return (

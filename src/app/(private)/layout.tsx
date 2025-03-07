@@ -1,4 +1,3 @@
-import { Breadcrumbs } from '@/components/layout/Breadcrumbs/Breadcrumbs';
 import { AppSidebar } from '@/components/layout/Sidebar/Sidebar';
 import { Separator } from '@/components/ui/separator';
 import {

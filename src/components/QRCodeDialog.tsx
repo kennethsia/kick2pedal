@@ -6,8 +6,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import Image from 'next/image';
 import QR from '@/public/gcash-qr.jpg';
+import Image from 'next/image';
 
 export function QRCodeDialog() {
   return (

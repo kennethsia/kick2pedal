@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import { getUserMeLoader } from '@/data/services/getUserMeLoader';
 import { api } from '@/lib/apiClient';
-import { Calendar, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 interface Registration {
   id: number;
@@ -51,8 +51,6 @@ export default async function DashboardPage() {
   const { data: registrations } = await api.registration.list(
     user?.data?.documentId,
   );
-
-  console.log(registrations);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">

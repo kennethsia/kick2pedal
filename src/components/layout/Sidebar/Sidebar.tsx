@@ -1,27 +1,19 @@
 'use client';
 
-import * as React from 'react';
 import {
-  AudioWaveform,
+  Bike,
   BookOpen,
-  Bot,
-  Calendar,
   CalendarDays,
-  CalendarPlus,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
+  Home,
+  Info,
   SquareTerminal,
+  Store,
   Trophy,
 } from 'lucide-react';
 
-import { NavMain } from '@/components/layout/Sidebar/components/nav-main';
 import { NavEvent } from '@/components/layout/Sidebar/components/nav-events';
+import { NavMain } from '@/components/layout/Sidebar/components/nav-main';
 import { NavUser } from '@/components/layout/Sidebar/components/nav-user';
-import { TeamSwitcher } from '@/components/layout/Sidebar/components/team-switcher';
 import {
   Sidebar,
   SidebarContent,
@@ -30,8 +22,8 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 
-import Image from 'next/image';
 import Logo from '@/public/k2p-logo-removebg-preview.png';
+import Image from 'next/image';
 import Link from 'next/link';
 
 // This is sample data.
@@ -60,41 +52,41 @@ const data = {
       icon: SquareTerminal,
     },
     {
-      title: 'Rules & Regulations',
-      url: '/rules-and-regulations',
-      icon: BookOpen,
-      isActive: true,
-      // items: [
-      //   {
-      //     title: 'Genesis',
-      //     url: '#',
-      //   },
-      //   {
-      //     title: 'Explorer',
-      //     url: '#',
-      //   },
-      //   {
-      //     title: 'Quantum',
-      //     url: '#',
-      //   },
-      // ],
-    },
-  ],
-  navEvents: [
-    // {
-    //   title: 'My events',
-    //   url: '/my-events',
-    //   icon: CalendarPlus,
-    // },
-    {
       title: 'All events',
       url: '/events',
       icon: CalendarDays,
     },
     {
-      title: 'Leaderboard',
+      title: 'Rankings',
       url: '/leaderboard',
       icon: Trophy,
+    },
+    {
+      title: 'Rulebook',
+      url: '/rules-and-regulations',
+      icon: BookOpen,
+    },
+  ],
+  navEvents: [
+    {
+      title: 'Home',
+      url: '/',
+      icon: Home,
+    },
+    {
+      title: 'About Us',
+      url: '/about-us',
+      icon: Info,
+    },
+    {
+      title: 'Store',
+      url: '/store',
+      icon: Store,
+    },
+    {
+      title: 'Races',
+      url: '/events',
+      icon: Bike,
     },
   ],
 };

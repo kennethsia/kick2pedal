@@ -1,20 +1,9 @@
 'use client';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Logo from '@/public/kick2pedal-word-logo_360x.png';
+import Image from 'next/image';
 
-import {
-  Home,
-  Info,
-  Calendar,
-  User,
-  Store,
-  Trophy,
-  Contact,
-  Users,
-  Target,
-  Gift,
-} from 'lucide-react';
+import { Calendar, Contact, Home, Info, Store, Trophy } from 'lucide-react';
 
 export type NavItem = {
   title: string;
@@ -26,10 +15,6 @@ export type NavItem = {
   items?: NavItem[];
 };
 
-import * as React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -39,8 +24,12 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
+import { Menu } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import * as React from 'react';
 import { Separator } from './ui/separator';
 
 const ListItem = React.forwardRef<

@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -19,11 +18,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { registerUserAction } from '@/data/actions/authActions';
-import { useActionState } from 'react';
-import { ZodErrors } from './ZodErrors';
-import { StrapiErrors } from './StrapiErrors';
+import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
+import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
+import { StrapiErrors } from './StrapiErrors';
+import { ZodErrors } from './ZodErrors';
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -80,11 +80,11 @@ export function SignupForm({
               </div>
             </div>
 
-            {/* Personal Information */}
+            {/* Rider Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Personal Information</h3>
+              <h3 className="text-lg font-medium">Rider Information</h3>
               <div className="grid gap-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="firstName">First Name</Label>
                     <Input
@@ -163,19 +163,13 @@ export function SignupForm({
                   />
                   <ZodErrors error={formState?.zodErrors?.parentFullName} />
                 </div>
-              </div>
-            </div>
 
-            {/* Rider Information */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Rider Information</h3>
-              <div className="grid gap-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="grid gap-2">
+                <div className="grid grid-cols-1 gap-4">
+                  {/* <div className="grid gap-2">
                     <Label htmlFor="plateNumber">Plate Number</Label>
                     <Input id="plateNumber" name="plateNumber" type="text" />
                     <ZodErrors error={formState?.zodErrors?.plateNumber} />
-                  </div>
+                  </div> */}
                   <div className="grid gap-2">
                     <Label htmlFor="teamName">Team Name</Label>
                     <Input id="teamName" name="teamName" type="text" />
@@ -210,8 +204,8 @@ export function SignupForm({
                   </div>
                 </div>
 
-                {/* <div className="grid gap-4">
-                  <div className="grid gap-2">
+                <div className="grid gap-4">
+                  {/* <div className="grid gap-2">
                     <Label htmlFor="racerPhoto">Racer Photo</Label>
                     <Input
                       id="racerPhoto"
@@ -221,11 +215,15 @@ export function SignupForm({
                       accept="image/*"
                     />
                     <ZodErrors error={formState?.zodErrors?.racerPhoto} />
-                  </div>
+                  </div> */}
                   <div className="grid gap-2">
                     <Label htmlFor="identificationDocument">
                       Identification Document
+                      <p className="font-medium">
+                        (Upload Birth Certificate or Passport)
+                      </p>
                     </Label>
+
                     <Input
                       id="identificationDocument"
                       name="identificationDocument"
@@ -236,7 +234,7 @@ export function SignupForm({
                       error={formState?.zodErrors?.identificationDocument}
                     />
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
 

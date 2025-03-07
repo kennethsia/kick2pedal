@@ -1,9 +1,10 @@
 'use server';
 
-import { z } from 'zod';
+import { api } from '@/lib/apiClient';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { api } from '@/lib/apiClient';
+import { z } from 'zod';
+import { uploadImageService } from '../services/uploadImage';
 
 const MAX_FILE_SIZE = 5000000; // 5MB
 const ACCEPTED_IMAGE_TYPES = [
@@ -48,7 +49,6 @@ const schemaRegister = z.object({
   contactNumber: z.string().min(1, { message: 'Contact number is required' }),
 
   // Additional details
-  plateNumber: z.string().optional(),
   teamName: z.string().optional(),
   riderType: z.enum(['FILIPINO', 'FOREIGN'], {
     required_error: 'Please select rider type',
@@ -63,17 +63,15 @@ const schemaRegister = z.object({
   //     (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
   //     'Only .jpg, .jpeg, .png and .webp formats are supported.',
   //   ),
-  // identificationDocument: z
-  //   .any()
-  //   .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`),
+  identificationDocument: z
+    .any()
+    .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`),
 });
 
 export async function registerUserAction(prevState: any, formData: FormData) {
   // Extract file data
   // const racerPhoto = formData.get('racerPhoto') as File;
-  // const identificationDocument = formData.get(
-  //   'identificationDocument',
-  // ) as File;
+  const identificationDocument = formData.get('identificationDocument') as File;
 
   // Validate form data
   const validatedFields = schemaRegister.safeParse({
@@ -88,12 +86,11 @@ export async function registerUserAction(prevState: any, formData: FormData) {
     birthGender: formData.get('birthGender'),
     parentFullName: formData.get('parentFullName'),
     contactNumber: formData.get('contactNumber'),
-    plateNumber: formData.get('plateNumber'),
     teamName: formData.get('teamName'),
     riderType: formData.get('riderType'),
     foreignCountry: formData.get('foreignCountry'),
     // racerPhoto,
-    // identificationDocument,
+    identificationDocument,
   });
 
   if (!validatedFields.success) {
@@ -105,21 +102,38 @@ export async function registerUserAction(prevState: any, formData: FormData) {
     };
   }
 
-  // Create FormData for file upload
-  // const formDataToSend = new FormData();
-  // Object.entries(validatedFields.data).forEach(([key, value]) => {
-  //   if (key === 'racerPhoto' || key === 'identificationDocument') {
-  //     formDataToSend.append(key, value as File);
-  //   } else {
-  //     formDataToSend.append(key, value as string);
-  //   }
-  // });
-  console.log(validatedFields);
-  // console.log(formDataToSend);
+  const uploadedImage = await uploadImageService(identificationDocument);
 
-  const responseData = await api.user.signup(validatedFields.data);
+  const createPayload = {
+    data: {
+      username: validatedFields.data.username,
+      password: validatedFields.data.password,
+      email: validatedFields.data.email,
+      firstName: validatedFields.data.firstName,
+      middleName: validatedFields.data.middleName,
+      lastName: validatedFields.data.lastName,
+      nickname: validatedFields.data.nickname,
+      dateOfBirth: validatedFields.data.dateOfBirth,
+      birthGender: validatedFields.data.birthGender,
+      parentFullName: validatedFields.data.parentFullName,
+      contactNumber: validatedFields.data.contactNumber,
+      teamName: validatedFields.data.teamName,
+      riderType: validatedFields.data.riderType,
+      foreignCountry: validatedFields.data.foreignCountry,
+    },
+  };
 
-  if (!responseData) {
+  const userCreateResponseData = await api.user.signup(createPayload.data);
+
+  const updatePayload = {
+    data: {
+      identificationDocument: uploadedImage.data[0].id,
+    },
+  };
+
+  await api.user.update(userCreateResponseData.user.id, updatePayload.data);
+
+  if (!userCreateResponseData) {
     return {
       ...prevState,
       strapiErrors: null,
@@ -128,17 +142,17 @@ export async function registerUserAction(prevState: any, formData: FormData) {
     };
   }
 
-  if (responseData.error) {
+  if (userCreateResponseData.error) {
     return {
       ...prevState,
-      strapiErrors: responseData.error,
+      strapiErrors: userCreateResponseData.error,
       zodErrors: null,
       message: 'Failed to Register.',
     };
   }
 
   const cookieStore = await cookies();
-  cookieStore.set('jwt', responseData.jwt, config);
+  cookieStore.set('jwt', userCreateResponseData.jwt, config);
 
   redirect('/dashboard');
 }
@@ -195,8 +209,6 @@ export async function loginUserAction(prevState: any, formData: FormData) {
       message: 'Failed to Login.',
     };
   }
-
-  console.log(responseData, 'responseData');
 
   const cookieStore = await cookies();
   cookieStore.set('jwt', responseData.jwt, config);
