@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       'efficient-broccoli-2b394a2b5e.media.strapiapp.com',
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
 };
 
 export default nextConfig;
