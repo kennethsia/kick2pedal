@@ -46,12 +46,20 @@ interface Registration {
   category: any;
   additional_category_1?: any;
   additional_category_2?: any;
-  bikeBrand: BikeBrand;
-  wheelsetBrand: WheelsetBrand;
 }
 
 interface RegistrationCreate {
   data: {
+    registration_status: 'registered';
+    event: {
+      connect: any[];
+    };
+    user: {
+      connect: any[];
+    };
+    category: {
+      connect: any[];
+    };
     additional_category_2?:
       | {
           connect: any[];
@@ -62,18 +70,6 @@ interface RegistrationCreate {
           connect: any[];
         }
       | undefined;
-    registration_status: 'registered';
-    event: {
-      connect: any[];
-    };
-    user: {
-      connect: any[];
-    };
-    bikeBrand: BikeBrand;
-    wheelsetBrand: WheelsetBrand;
-    category: {
-      connect: any[];
-    };
     proofOfPayment: number;
   };
 }

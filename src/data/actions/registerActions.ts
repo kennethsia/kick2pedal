@@ -33,8 +33,6 @@ const formSchema = z.object({
   category: z.string(),
   additional_category_1: z.string().optional(),
   additional_category_2: z.string().optional(),
-  bikeBrand: z.enum(BikeBrands),
-  wheelsetBrand: z.enum(WheelsetBrands),
   amount: z.string(),
   proofOfPayment: z
     .any()
@@ -49,8 +47,6 @@ export async function createRegistrationAction(
     category: formData.get('category'),
     additional_category_1: formData.get('additional_category_1'),
     additional_category_2: formData.get('additional_category_2'),
-    bikeBrand: formData.get('bikeBrand'),
-    wheelsetBrand: formData.get('wheelsetBrand'),
     amount: formData.get('amount'),
     proofOfPayment: formData.get('proofOfPayment'),
   });
@@ -75,8 +71,6 @@ export async function createRegistrationAction(
       user: {
         connect: [parseInt(formData.get('userId') as string)],
       },
-      bikeBrand: validatedFields.data.bikeBrand,
-      wheelsetBrand: validatedFields.data.wheelsetBrand,
       category: {
         connect: [parseInt(validatedFields.data.category)],
       },
