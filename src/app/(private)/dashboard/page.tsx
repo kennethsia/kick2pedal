@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -9,6 +10,7 @@ import {
 import { getUserMeLoader } from '@/data/services/getUserMeLoader';
 import { api } from '@/lib/apiClient';
 import { MapPin } from 'lucide-react';
+import Link from 'next/link';
 
 interface Registration {
   id: number;
@@ -138,6 +140,12 @@ export default async function DashboardPage() {
             </Card>
           ))}
         </div>
+      </div>
+
+      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+        <Link href="/events">
+          <Button>See all events</Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -16,10 +15,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createRegistrationAction } from '@/data/actions/registerActions';
-import { Loader2 } from 'lucide-react';
 import { useActionState, useState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { StrapiErrors } from './StrapiErrors';
+import SubmitButton from './SubmitButton';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 
@@ -68,7 +66,6 @@ const CATEGORY_PRICES = {
 const DISCOUNT = 300;
 
 export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
-  const status = useFormStatus();
   const [state, formAction] = useActionState(createRegistrationAction, null);
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -253,14 +250,7 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
         </CardContent>
       </Card>
 
-      <Button type="submit" className="w-full">
-        {status.pending ? (
-          <Loader2 className="animate-spin" />
-        ) : (
-          ' Complete Registration'
-        )}
-      </Button>
-
+      <SubmitButton text={'Complete Registration'} />
       <StrapiErrors error={state?.strapiErrors} />
     </form>
   );

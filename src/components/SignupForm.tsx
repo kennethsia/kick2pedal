@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -19,10 +18,9 @@ import {
 } from '@/components/ui/select';
 import { registerUserAction } from '@/data/actions/authActions';
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
 import { useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { StrapiErrors } from './StrapiErrors';
+import SubmitButton from './SubmitButton';
 import { ZodErrors } from './ZodErrors';
 
 const INITIAL_STATE = {
@@ -36,7 +34,6 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'>) {
-  const status = useFormStatus();
   const [formState, formAction] = useActionState(
     registerUserAction,
     INITIAL_STATE,
@@ -238,13 +235,7 @@ export function SignupForm({
               </div>
             </div>
 
-            <Button type="submit" className="w-full">
-              {status.pending ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                'Create Account'
-              )}
-            </Button>
+            <SubmitButton text={'Create account'} />
 
             <StrapiErrors error={formState?.strapiErrors} />
           </form>
