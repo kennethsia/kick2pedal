@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 
 export default async function RegisterPage({ params }: { params: any }) {
   // Remove await from params
-  const { eventId } = params;
+  const { eventId } = await params;
   const { data: event } = await api.events.get(eventId);
   const user = await getUserMeLoader();
 

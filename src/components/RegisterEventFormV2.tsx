@@ -78,15 +78,19 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
 
     // Check primary category
     if (formData.get('category')) {
-      amount += CATEGORY_PRICES.primary;
+      const isTeamBattle = formData.get('category') === '28';
+      if (!isTeamBattle) amount += CATEGORY_PRICES.primary;
     }
 
     // Check additional categories
     if (formData.get('additional_category_1')) {
-      amount += CATEGORY_PRICES.additional;
+      console.log(formData.get('additional_category_1'));
+      const isTeamBattle = formData.get('additional_category_1') === '28';
+      if (!isTeamBattle) amount += CATEGORY_PRICES.additional;
     }
     if (formData.get('additional_category_2')) {
-      amount += CATEGORY_PRICES.additional;
+      const isTeamBattle = formData.get('additional_category_2') === '28';
+      if (!isTeamBattle) amount += CATEGORY_PRICES.additional;
     }
 
     setTotalAmount(amount - DISCOUNT);
@@ -173,7 +177,7 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
         </CardContent>
       </Card>
 
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Bike Specs</CardTitle>
         </CardHeader>
@@ -193,7 +197,7 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
               </SelectContent>
             </Select>
           </div>
-
+          
           <div className="space-y-4">
             <Label htmlFor="wheelsetBrand">Bike Brand</Label>
             <Select name="wheelsetBrand" required>
@@ -210,16 +214,20 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
             </Select>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       <Card>
         <CardHeader>
           <CardTitle>Amount to pay</CardTitle>
           <CardDescription>
-            Primary category: ₱{CATEGORY_PRICES.primary.toLocaleString()} |
+            Primary category: ₱{CATEGORY_PRICES.primary.toLocaleString()}
+            <br />
             Additional categories: ₱
             {CATEGORY_PRICES.additional.toLocaleString()} each <br />
-            (₱{DISCOUNT} Early Bird Discount )
+            Team categories: ₱ 1,000 per team (payment will be on site)
+          </CardDescription>
+          <CardDescription className="justify-end ">
+            PROMO: (₱{DISCOUNT} Early Bird Discount )
           </CardDescription>
         </CardHeader>
         <CardContent>
