@@ -215,7 +215,7 @@ export default function Navigation() {
       {/* Desktop Login Button */}
       <div className="hidden md:block">
         <Button size="lg" asChild>
-          <Link href="/login">Log In</Link>
+          <Link href="/dashboard">Log In</Link>
         </Button>
       </div>
 
@@ -228,6 +228,10 @@ export default function Navigation() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <Button size="lg" asChild className="w-full">
+              <Link href="/dashboard">Log In</Link>
+            </Button>
+            <Separator className="my-2" />
             <div className="flex flex-col gap-4 py-4">
               {mainNav.map((item, index) => {
                 const Icon = item.icon;
@@ -270,12 +274,6 @@ export default function Navigation() {
                   </div>
                 );
               })}
-
-              <Separator className="my-2" />
-
-              <Button size="lg" asChild className="w-full">
-                <Link href="/login">Log In</Link>
-              </Button>
             </div>
           </SheetContent>
         </Sheet>

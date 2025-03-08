@@ -15,7 +15,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createRegistrationAction } from '@/data/actions/registerActions';
+import QR from '@/public/gcash-qr.jpg';
+import Image from 'next/image';
 import { useActionState, useState } from 'react';
+import { QRCodeDialog } from './QRCodeDialog';
 import { StrapiErrors } from './StrapiErrors';
 import SubmitButton from './SubmitButton';
 import { Input } from './ui/input';
@@ -231,6 +234,16 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
       <Card>
         <CardHeader>
           <CardTitle>Proof of payment</CardTitle>
+          <CardDescription>
+            <QRCodeDialog />
+            <br />
+            <Image
+              src={QR}
+              alt="GCash QR Code"
+              width={300}
+              className="rounded-lg"
+            />
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">

@@ -30,7 +30,7 @@ export function QRCodeDialog() {
             width={300}
             className="rounded-lg"
           />
-          <div className="text-center space-y-2">
+          {/* <div className="text-center space-y-2">
             <p className="font-medium">GCash Account Details</p>
             <p className="text-sm text-muted-foreground">
               Name: Juan Dela Cruz
@@ -38,7 +38,7 @@ export function QRCodeDialog() {
             <p className="text-sm text-muted-foreground">
               Number: 0917 123 4567
             </p>
-          </div>
+          </div> */}
         </div>
       </DialogContent>
     </Dialog>

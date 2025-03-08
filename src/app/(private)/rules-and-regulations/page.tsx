@@ -56,6 +56,56 @@ export default function RulesPage() {
     },
   ];
 
+  const rules2 = [
+    {
+      id: 1,
+      title: 'Team Composition',
+      rules: [
+        'Each team shall consist of one (1) participant for the 2-8 years old category.',
+        'The participant must be the best rider representing their team in the said category.',
+      ],
+    },
+    {
+      id: 2,
+      title: ' Scoring System',
+      rules: [
+        "Points will be awarded to each team based on their participant's finishing position in the individual category.",
+        'The scoring system shall be as follows:',
+        '1st place: 10 points',
+        '2nd place: 8 points',
+        '3rd place: 6 points',
+        '4th place: 4 points',
+        '5th place: 2 points',
+      ],
+    },
+    {
+      id: 3,
+      title: 'Team Championship',
+      rules: [
+        'The team with the highest consolidated score at the end of the competition shall be declared the Team Champion.',
+        'In the event of a tie, the team with the participant who achieved the fastest time in the individual category shall be declared the winner.',
+      ],
+    },
+    {
+      id: 4,
+      title: 'General Rules',
+      rules: [
+        'All participants must adhere to the rules and regulations of the competition.',
+        'The decision of the competition organizers and judges shall be final and binding.',
+        'Any form of unsportsmanlike conduct or cheating shall result in disqualification and forfeiture of points.',
+      ],
+    },
+    {
+      id: 5,
+      title: 'Penalties',
+      rules: [
+        'Any team found to have violated the rules and regulations of the competition shall be subject to penalties, including but not limited to:',
+        'Deduction of points',
+        'Disqualification from the competition',
+      ],
+    },
+  ];
+
   return (
     <div className="container py-8">
       <h1 className="text-3xl font-bold mb-8">Rules and Regulations</h1>
@@ -82,6 +132,35 @@ export default function RulesPage() {
       <div className="mt-8 text-sm text-muted-foreground text-center">
         Note: All rules are subject to referee interpretation and discretion
         where applicable.
+      </div>
+
+      <h1 className="text-3xl font-bold my-8">
+        K2P Runbike Team Battle Rules and Regulations
+      </h1>
+
+      <div className="grid gap-6">
+        {rules2.map((section) => (
+          <Card key={section.id}>
+            <CardHeader>
+              <CardTitle>{section.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="list-disc space-y-2 ml-6">
+                {section.rules.map((rule, index) => (
+                  <li key={index} className="text-muted-foreground">
+                    {rule}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="mt-8 text-sm text-muted-foreground text-center">
+        By participating in the team battle, all teams acknowledge that they
+        have read, understood, and agreed to abide by these rules and
+        regulations.
       </div>
     </div>
   );

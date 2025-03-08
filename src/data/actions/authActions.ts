@@ -164,7 +164,7 @@ const schemaLogin = z.object({
       message: 'Identifier must have at least 3 or more characters',
     })
     .max(20, {
-      message: 'Please enter a valid username or email address',
+      message: 'Please enter a valid username',
     }),
   password: z
     .string()

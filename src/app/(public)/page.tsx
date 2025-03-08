@@ -39,7 +39,7 @@ export default async function Home() {
                     {event.description}
                   </CardDescription>
                 </div>
-                <Link href={`/events/${event.documentId}`}>
+                <Link href={`/events`}>
                   <Button size="lg">Register</Button>
                 </Link>
               </div>

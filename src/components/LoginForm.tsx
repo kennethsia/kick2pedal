@@ -37,29 +37,29 @@ export function LoginForm({
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Login to your account</h1>
         <p className="text-balance text-sm text-muted-foreground">
-          Enter your username or email below to login to your account
+          Enter your username below to login to your account
         </p>
       </div>
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <Label htmlFor="identifier">Email</Label>
+          <Label htmlFor="identifier">Username</Label>
           <Input
             id="identifier"
             name="identifier"
             type="text"
-            placeholder="username or email"
+            placeholder="username"
           />
           <ZodErrors error={formState?.zodErrors?.identifier} />
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
             <Label htmlFor="password">Password</Label>
-            <a
+            {/* <a
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
-            </a>
+            </a> */}
           </div>
           <Input id="password" name="password" type="password" />
           <ZodErrors error={formState?.zodErrors?.password} />
