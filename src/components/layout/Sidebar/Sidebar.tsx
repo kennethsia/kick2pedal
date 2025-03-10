@@ -6,6 +6,7 @@ import {
   CalendarDays,
   Home,
   Info,
+  InfoIcon,
   SquareTerminal,
   Store,
   Trophy,
@@ -65,6 +66,11 @@ const data = {
       title: 'Rulebook',
       url: '/rules-and-regulations',
       icon: BookOpen,
+    },
+    {
+      title: 'Contact support',
+      url: '/support',
+      icon: InfoIcon,
     },
   ],
   navEvents: [

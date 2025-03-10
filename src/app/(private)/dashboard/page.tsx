@@ -136,6 +136,20 @@ export default async function DashboardPage() {
                     ₱{registration.amount?.toLocaleString() ?? 'N/A'}
                   </div>
                 </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="text-sm text-muted-foreground">
+                    If you want to make changes to your registration, please
+                    contact support.
+                  </div>
+                  {/* <div className="text-lg font-bold">
+                    ₱{registration.amount?.toLocaleString() ?? 'N/A'}
+                  </div> */}
+
+                  <Link href="/support">
+                    <Button size="sm">Contact support</Button>
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           ))}
