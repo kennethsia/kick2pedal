@@ -226,9 +226,9 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
             {CATEGORY_PRICES.additional.toLocaleString()} each <br />
             Team categories: ₱ 1,000 per team (payment will be on site)
           </CardDescription>
-          <CardDescription className="justify-end ">
+          {/* <CardDescription className="justify-end ">
             PROMO: (₱{DISCOUNT} Early Bird Discount )
-          </CardDescription>
+          </CardDescription> */}
         </CardHeader>
         <CardContent>
           <input type="hidden" name="amount" value={totalAmount} />
