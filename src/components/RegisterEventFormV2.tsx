@@ -66,7 +66,7 @@ const CATEGORY_PRICES = {
   additional: 350,
 } as const;
 
-const DISCOUNT = 300;
+const DISCOUNT = 0;
 
 export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
   const [state, formAction] = useActionState(createRegistrationAction, null);
