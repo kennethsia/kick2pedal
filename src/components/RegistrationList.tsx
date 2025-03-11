@@ -72,7 +72,7 @@ export function RegistrationList() {
       'Additional Category 1': reg.additional_category_1?.name || '',
       'Additional Category 2': reg.additional_category_2?.name || '',
       Amount: reg.amount,
-      'Proof of Payment': `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${reg?.proofOfPayment?.url}`,
+      'Proof of Payment': reg?.proofOfPayment?.url,
     }));
 
     // Create CSV string
@@ -148,7 +148,7 @@ export function RegistrationList() {
               </TableCell>
               <TableCell>
                 <a
-                  href={`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${registration?.proofOfPayment?.url}`}
+                  href={registration?.proofOfPayment?.url}
                   target="_blank"
                   className="text-blue-600 hover:text-blue-800 underline"
                 >
