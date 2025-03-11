@@ -119,6 +119,10 @@ export const api = {
       }),
     update: (id: string, data: Partial<RegisterUser>) =>
       fetchClient<RegisterUser>(`/users/${id}`, { method: 'PUT', body: data }),
+    listAll: () =>
+      fetchClient<RegisterUser>(
+        `/users?populate[identificationDocument][populate]=*&pagination[page]=1&pagination[pageSize]=200`,
+      ),
   },
 
   registration: {

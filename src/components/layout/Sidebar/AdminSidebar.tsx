@@ -1,6 +1,13 @@
 'use client';
 
-import { Bike, Home, Info, SquareTerminal, Store } from 'lucide-react';
+import {
+  Bike,
+  Calendar,
+  Home,
+  Info,
+  PersonStanding,
+  Store,
+} from 'lucide-react';
 
 import { NavEvent } from '@/components/layout/Sidebar/components/nav-events';
 import { NavMain } from '@/components/layout/Sidebar/components/nav-main';
@@ -38,9 +45,14 @@ const data = {
   // ],
   navMain: [
     {
-      title: 'Admin Dashboard',
+      title: 'Registrations',
       url: '/admin',
-      icon: SquareTerminal,
+      icon: Calendar,
+    },
+    {
+      title: 'Users',
+      url: '/admin/users',
+      icon: PersonStanding,
     },
     // {
     //   title: 'All events',

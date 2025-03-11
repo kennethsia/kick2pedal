@@ -24,6 +24,14 @@ interface Registration {
     firstName: string;
     lastName: string;
     email: string;
+    username: string;
+    birthGender: string;
+    contactNumber: string;
+    dateOfBirth: string;
+    foreignCountry: string;
+    parentFullName: string;
+    riderType: string;
+    teamName: string;
   };
   event: {
     title: string;
@@ -65,14 +73,24 @@ export function RegistrationList() {
       'Registration ID': reg.documentId,
       Event: reg.event.title,
       Status: reg.registration_status,
-      Date: format(new Date(reg.createdAt), 'yyyy-MM-dd'),
+      Date: format(new Date(reg.createdAt), 'yyyy-MM-dd HH:mm:ss'),
       Name: `${reg.user.firstName} ${reg.user.lastName}`,
+      Username: reg.user.username || '',
       Email: reg.user.email,
+      'Birth Gender': reg.user.birthGender || '',
+      'Date of Birth': reg.user.dateOfBirth
+        ? format(new Date(reg.user.dateOfBirth), 'yyyy-MM-dd')
+        : '',
+      'Contact Number': reg.user.contactNumber || '',
+      'Parent/Guardian': reg.user.parentFullName || '',
+      'Team Name': reg.user.teamName || '',
+      'Rider Type': reg.user.riderType || '',
+      Country: reg.user.foreignCountry || '',
       'Primary Category': reg.category.name,
       'Additional Category 1': reg.additional_category_1?.name || '',
       'Additional Category 2': reg.additional_category_2?.name || '',
       Amount: reg.amount,
-      'Proof of Payment': reg?.proofOfPayment?.url,
+      'Proof of Payment': reg?.proofOfPayment?.url || '',
     }));
 
     // Create CSV string
@@ -121,6 +139,7 @@ export function RegistrationList() {
             {/* <TableHead>ID</TableHead> */}
             <TableHead>Event</TableHead>
             <TableHead>Name</TableHead>
+            <TableHead>DoB</TableHead>
             <TableHead>Category 1</TableHead>
             <TableHead>Category 2</TableHead>
             <TableHead>Category 3</TableHead>
@@ -138,13 +157,16 @@ export function RegistrationList() {
               <TableCell>
                 {registration.user.firstName} {registration.user.lastName}
               </TableCell>
+              <TableCell>
+                {format(new Date(registration.user.dateOfBirth), 'MMM d, yyyy')}
+              </TableCell>
               <TableCell>{registration.category.name}</TableCell>
               <TableCell>{registration?.additional_category_1?.name}</TableCell>
               <TableCell>{registration?.additional_category_2?.name}</TableCell>
               <TableCell>{registration.registration_status}</TableCell>
               <TableCell>₱{registration.amount?.toLocaleString()}</TableCell>
               <TableCell>
-                {format(new Date(registration.createdAt), 'MMM d, yyyy')}
+                {format(new Date(registration.createdAt), 'MMM d, yyyy h:mm a')}
               </TableCell>
               <TableCell>
                 <a
