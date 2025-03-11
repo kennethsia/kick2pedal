@@ -131,7 +131,10 @@ export const api = {
       fetchClient<Registration[]>(
         `/registrations?filters[user][documentId][$eq]=${id}&populate=*`,
       ),
-    listAll: () => fetchClient<Registration[]>(`/registrations?populate=*`),
+    listAll: () =>
+      fetchClient<Registration[]>(
+        `/registrations?populate=*&pagination[page]=1&pagination[pageSize]=200`,
+      ),
   },
 
   events: {
