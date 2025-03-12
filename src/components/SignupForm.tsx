@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/select';
 import { registerUserAction } from '@/data/actions/authActions';
 import { cn } from '@/lib/utils';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import { StrapiErrors } from './StrapiErrors';
 import SubmitButton from './SubmitButton';
 import { ZodErrors } from './ZodErrors';
@@ -30,15 +30,50 @@ const INITIAL_STATE = {
   message: null,
 };
 
+// Add this constant near other constants
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+const ACCEPTED_FILE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/jpg',
+  'application/pdf',
+];
+
 export function SignupForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'>) {
+  const [fileError, setFileError] = useState<string | null>(null);
   const [formState, formAction] = useActionState(
     registerUserAction,
     INITIAL_STATE,
   );
 
+  // Add this wrapper function for the form action
+  const handleSubmit = async (formData: FormData) => {
+    // Reset file error
+    setFileError(null);
+
+    // Get the file from the form data
+    const file = formData.get('identificationDocument') as File;
+
+    if (file) {
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        setFileError('File size must be less than 5MB');
+        return;
+      }
+
+      // Validate file type
+      if (!ACCEPTED_FILE_TYPES.includes(file.type)) {
+        setFileError('File must be an image (JPEG, PNG) or PDF');
+        return;
+      }
+    }
+
+    // If validation passes, proceed with form submission
+    return formAction(formData);
+  };
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -49,7 +84,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction} className="space-y-8">
+          <form action={handleSubmit} className="space-y-8">
             {/* Account Information */}
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Account Information</h3>
@@ -225,8 +260,31 @@ export function SignupForm({
                       id="identificationDocument"
                       name="identificationDocument"
                       type="file"
+                      accept="image/jpeg,image/png,image/jpg,application/pdf"
                       required
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          if (file.size > MAX_FILE_SIZE) {
+                            setFileError('File size must be less than 5MB');
+                          } else if (!ACCEPTED_FILE_TYPES.includes(file.type)) {
+                            setFileError(
+                              'File must be an image (JPEG, PNG) or PDF',
+                            );
+                          } else {
+                            setFileError(null);
+                          }
+                        }
+                      }}
                     />
+                    <p className="text-sm text-muted-foreground">
+                      Maximum file size: 5MB. Accepted formats: JPEG, PNG, PDF
+                    </p>
+                    {fileError && (
+                      <p className="text-sm font-medium text-destructive">
+                        {fileError}
+                      </p>
+                    )}
                     <ZodErrors
                       error={formState?.zodErrors?.identificationDocument}
                     />
@@ -235,7 +293,7 @@ export function SignupForm({
               </div>
             </div>
 
-            <SubmitButton text={'Create account'} />
+            <SubmitButton text={'Create account'} disabled={!!fileError} />
 
             <StrapiErrors error={formState?.strapiErrors} />
           </form>

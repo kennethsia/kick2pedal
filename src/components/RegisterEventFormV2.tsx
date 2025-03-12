@@ -68,43 +68,91 @@ const CATEGORY_PRICES = {
 
 const DISCOUNT = 0;
 
+// Add this constant near other constants
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+const ACCEPTED_FILE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/jpg',
+  'application/pdf',
+];
+
+const TEAM_BATTLE_CATEGORY_ID = '28';
+
 export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
+  const [fileError, setFileError] = useState<string | null>(null);
   const [state, formAction] = useActionState(createRegistrationAction, null);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  // Add onChange handlers for category selections
-  const handleCategoryChange = (formData: FormData) => {
+  const calculateAmount = (formData: FormData) => {
     let amount = 0;
 
     // Check primary category
-    if (formData.get('category')) {
-      const isTeamBattle = formData.get('category') === '28';
-      if (!isTeamBattle) amount += CATEGORY_PRICES.primary;
+    const primaryCategory = formData.get('category');
+    if (primaryCategory && primaryCategory !== TEAM_BATTLE_CATEGORY_ID) {
+      amount += CATEGORY_PRICES.primary;
     }
 
     // Check additional categories
-    if (formData.get('additional_category_1')) {
-      console.log(formData.get('additional_category_1'));
-      const isTeamBattle = formData.get('additional_category_1') === '28';
-      if (!isTeamBattle) amount += CATEGORY_PRICES.additional;
-    }
-    if (formData.get('additional_category_2')) {
-      const isTeamBattle = formData.get('additional_category_2') === '28';
-      if (!isTeamBattle) amount += CATEGORY_PRICES.additional;
+    const additionalCategory1 = formData.get('additional_category_1');
+    if (
+      additionalCategory1 &&
+      additionalCategory1 !== TEAM_BATTLE_CATEGORY_ID
+    ) {
+      amount += CATEGORY_PRICES.additional;
     }
 
-    setTotalAmount(amount - DISCOUNT);
+    const additionalCategory2 = formData.get('additional_category_2');
+    if (
+      additionalCategory2 &&
+      additionalCategory2 !== TEAM_BATTLE_CATEGORY_ID
+    ) {
+      amount += CATEGORY_PRICES.additional;
+    }
+
+    return amount - DISCOUNT;
   };
 
-  // Create a wrapper for the server action that updates amount
-  const formActionWithAmount = async (formData: FormData) => {
-    handleCategoryChange(formData);
+  const handleSubmit = async (formData: FormData) => {
+    // Reset file error
+    setFileError(null);
+
+    // Get the file from the form data
+    const file = formData.get('proofOfPayment') as File;
+
+    if (file) {
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        setFileError('File size must be less than 5MB');
+        return;
+      }
+
+      // Validate file type
+      if (!ACCEPTED_FILE_TYPES.includes(file.type)) {
+        setFileError('File must be an image (JPEG, PNG) or PDF');
+        return;
+      }
+    }
+
+    // Calculate final amount before submission
+    const finalAmount = calculateAmount(formData);
+    formData.set('amount', finalAmount.toString());
+
+    // If validation passes, proceed with form submission
     return formAction(formData);
   };
+
+  // Add onChange handler for real-time amount calculation
+  const handleFormChange = (e: React.FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(e.currentTarget);
+    const newAmount = calculateAmount(formData);
+    setTotalAmount(newAmount);
+  };
+
   return (
     <form
-      action={formActionWithAmount}
-      onChange={(e) => handleCategoryChange(new FormData(e.currentTarget))}
+      action={handleSubmit}
+      onChange={handleFormChange}
       className="space-y-6"
     >
       <input type="hidden" name="eventId" value={event.documentId} />
@@ -260,18 +308,45 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
               id="proofOfPayment"
               name="proofOfPayment"
               type="file"
+              accept="image/jpeg,image/png,image/jpg,application/pdf"
+              required
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  if (file.size > MAX_FILE_SIZE) {
+                    setFileError('File size must be less than 5MB');
+                  } else if (!ACCEPTED_FILE_TYPES.includes(file.type)) {
+                    setFileError('File must be an image (JPEG, PNG) or PDF');
+                  } else {
+                    setFileError(null);
+                  }
+                }
+              }}
+            />
+            <p className="text-sm text-muted-foreground">
+              Maximum file size: 5MB. Accepted formats: JPEG, PNG, PDF
+            </p>
+            {fileError && (
+              <p className="text-sm font-medium text-destructive">
+                {fileError}
+              </p>
+            )}
+            {/* <Input
+              id="proofOfPayment"
+              name="proofOfPayment"
+              type="file"
               accept="image/*"
               required
             />
             <p className="text-sm text-muted-foreground">
               Please upload a clear photo of your payment receipt. Max file
               size: 5MB
-            </p>
+            </p> */}
           </div>
         </CardContent>
       </Card>
 
-      <SubmitButton text={'Complete Registration'} />
+      <SubmitButton text={'Complete Registration'} disabled={!!fileError} />
       <StrapiErrors error={state?.strapiErrors} />
     </form>
   );
