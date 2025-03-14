@@ -23,13 +23,15 @@ export default async function Home() {
         {events.map((event: any) => (
           <Card key={event.id} className="overflow-hidden">
             <div className="relative aspect-[16/9] w-full">
-              <Image
-                src={`${event.image?.url}` || '/placeholder-event.jpg'}
-                alt={event.title}
-                fill
-                className="object-cover"
-                priority
-              />
+              {event?.image?.url && (
+                <Image
+                  src={`${event.image?.url}` || '/placeholder-event.jpg'}
+                  alt={event.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              )}
             </div>
             <CardHeader>
               <div className="flex items-start justify-between">

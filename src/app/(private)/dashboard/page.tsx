@@ -57,6 +57,9 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
       <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+        <p className="text-4xl font-bold">Hi, {user?.data?.firstName}!</p>
+      </div>
+      <div className="grid auto-rows-min gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Total Registered Events</CardTitle>

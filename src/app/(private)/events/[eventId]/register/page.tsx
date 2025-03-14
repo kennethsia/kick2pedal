@@ -1,4 +1,4 @@
-import { RegisterEventFormV2 } from '@/components/RegisterEventFormV2';
+import { RegisterEventFormV3 } from '@/components/RegisterEventFormV3';
 import { Button } from '@/components/ui/button';
 import { getUserMeLoader } from '@/data/services/getUserMeLoader';
 import { api } from '@/lib/apiClient';
@@ -13,12 +13,19 @@ export default async function RegisterPage({ params }: { params: any }) {
   const { data: registrations } = await api.registration.list(
     user?.data?.documentId,
   );
+  console.log(eventId);
+  console.log(registrations);
 
   if (!event) {
     notFound();
   }
 
-  if (registrations && registrations.length > 0) {
+  // Check if the user is already registered for this specific event
+  const isAlreadyRegistered = registrations?.some(
+    (registration: any) => registration.event.documentId === eventId,
+  );
+
+  if (isAlreadyRegistered) {
     return (
       <div className="container max-w-2xl py-8">
         <div className="mb-8">
@@ -43,7 +50,7 @@ export default async function RegisterPage({ params }: { params: any }) {
           Complete your registration details below
         </p>
       </div>
-      <RegisterEventFormV2 event={event} user={user} />
+      <RegisterEventFormV3 event={event} user={user} />
     </div>
   );
 }
