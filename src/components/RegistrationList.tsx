@@ -43,6 +43,7 @@ interface Registration {
   event: {
     title: string;
     id: number;
+    date: string;
   };
   category: {
     name: string;
@@ -129,9 +130,9 @@ export function RegistrationList() {
   };
 
   // Calculate age in the format X.Y where X is years and Y is months
-  const calculateAge = (dateOfBirth: string) => {
+  const calculateAge = (dateOfBirth: string, eventDate: string) => {
     const dob = new Date(dateOfBirth);
-    const now = new Date();
+    const now = new Date(eventDate);
 
     const years = differenceInYears(now, dob);
 
@@ -162,7 +163,9 @@ export function RegistrationList() {
       'Date of Birth': reg.user.dateOfBirth
         ? format(new Date(reg.user.dateOfBirth), 'yyyy-MM-dd')
         : '',
-      Age: reg.user.dateOfBirth ? calculateAge(reg.user.dateOfBirth) : '',
+      Age: reg.user.dateOfBirth
+        ? calculateAge(reg.user.dateOfBirth, reg.event.date)
+        : '',
       'Primary Category': reg.category.name,
       'Additional Category 1': reg.additional_category_1?.name || '',
       'Additional Category 2': reg.additional_category_2?.name || '',
@@ -262,7 +265,10 @@ export function RegistrationList() {
                   )}
                 </TableCell>
                 <TableCell>
-                  {calculateAge(registration.user.dateOfBirth)}
+                  {calculateAge(
+                    registration.user.dateOfBirth,
+                    registration.event.date,
+                  )}
                 </TableCell>
                 <TableCell>{registration.category.name}</TableCell>
                 <TableCell>
