@@ -17,7 +17,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { api } from '@/lib/apiClient';
-import { format } from 'date-fns';
+import { differenceInMonths, differenceInYears, format } from 'date-fns';
 import { Download } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -85,19 +85,6 @@ export function RegistrationList() {
     }
   };
 
-  // const fetchEvents = async () => {
-  //   try {
-  //     // Assuming there's an API endpoint to fetch events
-  //     // If not, we can extract unique events from registrations
-  //     const { data } = await api.events.listAll(); // Replace with your actual API call
-  //     setEvents(data);
-  //   } catch (error) {
-  //     console.error('Error fetching events:', error);
-  //     // Fallback: Extract unique events from registrations if API call fails
-  //     extractEventsFromRegistrations();
-  //   }
-  // };
-
   // Fallback method to extract unique events from registrations
   const extractEventsFromRegistrations = () => {
     if (allRegistrations.length > 0) {
@@ -141,6 +128,21 @@ export function RegistrationList() {
     setSelectedEvent(value);
   };
 
+  // Calculate age in the format X.Y where X is years and Y is months
+  const calculateAge = (dateOfBirth: string) => {
+    const dob = new Date(dateOfBirth);
+    const now = new Date();
+
+    const years = differenceInYears(now, dob);
+
+    // Calculate total months then subtract the years already counted
+    const totalMonths = differenceInMonths(now, dob);
+    const remainingMonths = totalMonths % 12;
+
+    // Format as X.Y where X is years and Y is months
+    return `${years}.${remainingMonths}`;
+  };
+
   const downloadCSV = () => {
     // Convert registrations to CSV format
     const csvData = registrations.map((reg) => ({
@@ -152,14 +154,15 @@ export function RegistrationList() {
       Username: reg.user.username || '',
       Email: reg.user.email,
       'Birth Gender': reg.user.birthGender || '',
-      'Date of Birth': reg.user.dateOfBirth
-        ? format(new Date(reg.user.dateOfBirth), 'yyyy-MM-dd')
-        : '',
       'Contact Number': reg.user.contactNumber || '',
       'Parent/Guardian': reg.user.parentFullName || '',
       'Team Name': reg.user.teamName || '',
       'Rider Type': reg.user.riderType || '',
       Country: reg.user.foreignCountry || '',
+      'Date of Birth': reg.user.dateOfBirth
+        ? format(new Date(reg.user.dateOfBirth), 'yyyy-MM-dd')
+        : '',
+      Age: reg.user.dateOfBirth ? calculateAge(reg.user.dateOfBirth) : '',
       'Primary Category': reg.category.name,
       'Additional Category 1': reg.additional_category_1?.name || '',
       'Additional Category 2': reg.additional_category_2?.name || '',
@@ -227,6 +230,7 @@ export function RegistrationList() {
             <TableHead>Event</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>DoB</TableHead>
+            <TableHead>Age</TableHead>
             <TableHead>Category 1</TableHead>
             <TableHead>Category 2</TableHead>
             <TableHead>Category 3</TableHead>
@@ -239,7 +243,7 @@ export function RegistrationList() {
         <TableBody>
           {registrations.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={10} className="text-center py-4">
+              <TableCell colSpan={11} className="text-center py-4">
                 No registrations found for the selected event.
               </TableCell>
             </TableRow>
@@ -256,6 +260,9 @@ export function RegistrationList() {
                     new Date(registration.user.dateOfBirth),
                     'MMM d, yyyy',
                   )}
+                </TableCell>
+                <TableCell>
+                  {calculateAge(registration.user.dateOfBirth)}
                 </TableCell>
                 <TableCell>{registration.category.name}</TableCell>
                 <TableCell>
