@@ -2,6 +2,13 @@
 
 import { Button } from '@/components/ui/button';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
   Table,
   TableBody,
   TableCell,
@@ -35,6 +42,7 @@ interface Registration {
   };
   event: {
     title: string;
+    id: number;
   };
   category: {
     name: string;
@@ -48,23 +56,89 @@ interface Registration {
   proofOfPayment?: { url: string };
 }
 
+interface Event {
+  id: number;
+  title: string;
+}
+
 export function RegistrationList() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
+  const [allRegistrations, setAllRegistrations] = useState<Registration[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchRegistrations();
+    extractEventsFromRegistrations();
   }, []);
 
   const fetchRegistrations = async () => {
     try {
       const { data } = await api.registration.listAll();
       setRegistrations(data);
+      setAllRegistrations(data);
     } catch (error) {
       console.error('Error fetching registrations:', error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // const fetchEvents = async () => {
+  //   try {
+  //     // Assuming there's an API endpoint to fetch events
+  //     // If not, we can extract unique events from registrations
+  //     const { data } = await api.events.listAll(); // Replace with your actual API call
+  //     setEvents(data);
+  //   } catch (error) {
+  //     console.error('Error fetching events:', error);
+  //     // Fallback: Extract unique events from registrations if API call fails
+  //     extractEventsFromRegistrations();
+  //   }
+  // };
+
+  // Fallback method to extract unique events from registrations
+  const extractEventsFromRegistrations = () => {
+    if (allRegistrations.length > 0) {
+      const uniqueEvents: Event[] = [];
+      const eventIds = new Set();
+
+      allRegistrations.forEach((reg) => {
+        if (!eventIds.has(reg.event.id)) {
+          eventIds.add(reg.event.id);
+          uniqueEvents.push({ id: reg.event.id, title: reg.event.title });
+        }
+      });
+
+      setEvents(uniqueEvents);
+    }
+  };
+
+  useEffect(() => {
+    // If no events were fetched from the API, try to extract them from registrations
+    if (events.length === 0 && allRegistrations.length > 0) {
+      extractEventsFromRegistrations();
+    }
+  }, [allRegistrations]);
+
+  useEffect(() => {
+    filterRegistrations();
+  }, [selectedEvent, allRegistrations]);
+
+  const filterRegistrations = () => {
+    if (selectedEvent === 'all') {
+      setRegistrations(allRegistrations);
+    } else {
+      const filtered = allRegistrations.filter(
+        (reg) => reg.event.id.toString() === selectedEvent,
+      );
+      setRegistrations(filtered);
+    }
+  };
+
+  const handleEventChange = (value: string) => {
+    setSelectedEvent(value);
   };
 
   const downloadCSV = () => {
@@ -122,11 +196,24 @@ export function RegistrationList() {
     return <div>Loading...</div>;
   }
 
-  console.log(registrations);
-
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <Select value={selectedEvent} onValueChange={handleEventChange}>
+            <SelectTrigger className="w-[250px]">
+              <SelectValue placeholder="Filter by Event" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Events</SelectItem>
+              {events.map((event) => (
+                <SelectItem key={event.id} value={event.id.toString()}>
+                  {event.title}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <Button onClick={downloadCSV} className="gap-2">
           <Download className="h-4 w-4" />
           Export CSV
@@ -146,39 +233,61 @@ export function RegistrationList() {
             <TableHead>Status</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead>Proof of payent</TableHead>
+            <TableHead>Proof of payment</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {registrations.map((registration) => (
-            <TableRow key={registration.id}>
-              {/* <TableCell>{registration.documentId}</TableCell> */}
-              <TableCell>{registration.event.title}</TableCell>
-              <TableCell>
-                {registration.user.firstName} {registration.user.lastName}
-              </TableCell>
-              <TableCell>
-                {format(new Date(registration.user.dateOfBirth), 'MMM d, yyyy')}
-              </TableCell>
-              <TableCell>{registration.category.name}</TableCell>
-              <TableCell>{registration?.additional_category_1?.name}</TableCell>
-              <TableCell>{registration?.additional_category_2?.name}</TableCell>
-              <TableCell>{registration.registration_status}</TableCell>
-              <TableCell>₱{registration.amount?.toLocaleString()}</TableCell>
-              <TableCell>
-                {format(new Date(registration.createdAt), 'MMM d, yyyy h:mm a')}
-              </TableCell>
-              <TableCell>
-                <a
-                  href={registration?.proofOfPayment?.url}
-                  target="_blank"
-                  className="text-blue-600 hover:text-blue-800 underline"
-                >
-                  View file
-                </a>
+          {registrations.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={10} className="text-center py-4">
+                No registrations found for the selected event.
               </TableCell>
             </TableRow>
-          ))}
+          ) : (
+            registrations.map((registration) => (
+              <TableRow key={registration.id}>
+                {/* <TableCell>{registration.documentId}</TableCell> */}
+                <TableCell>{registration.event.title}</TableCell>
+                <TableCell>
+                  {registration.user.firstName} {registration.user.lastName}
+                </TableCell>
+                <TableCell>
+                  {format(
+                    new Date(registration.user.dateOfBirth),
+                    'MMM d, yyyy',
+                  )}
+                </TableCell>
+                <TableCell>{registration.category.name}</TableCell>
+                <TableCell>
+                  {registration?.additional_category_1?.name}
+                </TableCell>
+                <TableCell>
+                  {registration?.additional_category_2?.name}
+                </TableCell>
+                <TableCell>{registration.registration_status}</TableCell>
+                <TableCell>₱{registration.amount?.toLocaleString()}</TableCell>
+                <TableCell>
+                  {format(
+                    new Date(registration.createdAt),
+                    'MMM d, yyyy h:mm a',
+                  )}
+                </TableCell>
+                <TableCell>
+                  {registration?.proofOfPayment?.url ? (
+                    <a
+                      href={registration.proofOfPayment.url}
+                      target="_blank"
+                      className="text-blue-600 hover:text-blue-800 underline"
+                    >
+                      View file
+                    </a>
+                  ) : (
+                    <span className="text-gray-400">No file</span>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </div>
