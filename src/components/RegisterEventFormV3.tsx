@@ -16,7 +16,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createRegistrationAction } from '@/data/actions/registerActions';
-import QR from '@/public/gcash-qr.jpg';
+import MindanaoQRImage from '@/public/gcash-qr-mindanao.jpg';
+import NCRQRImage from '@/public/gcash-qr.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useActionState, useEffect, useState } from 'react';
@@ -101,6 +102,33 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
     [key: string]: string;
   }>({});
 
+  const categoryPricesMap = {
+    '1st Victor Cup Race': {
+      primary: 1500,
+      additional: 350,
+    },
+    'Kick2Pedal Mindanao - Avia Estate - Sarangani Province': {
+      primary: 750,
+      additional: 200,
+    },
+    'Kick2Pedal Mindanao - Northtown - Davao City': {
+      primary: 950,
+      additional: 200,
+    },
+  };
+
+  const imageMap = {
+    '1st Victor Cup Race': {
+      image: NCRQRImage,
+    },
+    'Kick2Pedal Mindanao - Avia Estate - Sarangani Province': {
+      image: MindanaoQRImage,
+    },
+    'Kick2Pedal Mindanao - Northtown - Davao City': {
+      image: MindanaoQRImage,
+    },
+  };
+
   // State to store form values between steps
   const [formState, setFormState] = useState({
     category: '',
@@ -127,7 +155,9 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
 
     // Check primary category
     if (primaryCategory && primaryCategory !== TEAM_BATTLE_CATEGORY_ID) {
-      amount += CATEGORY_PRICES.primary;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      amount += categoryPricesMap[event.title].primary;
     }
 
     // Check additional categories
@@ -135,14 +165,18 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
       additionalCategory1 &&
       additionalCategory1 !== TEAM_BATTLE_CATEGORY_ID
     ) {
-      amount += CATEGORY_PRICES.additional;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      amount += categoryPricesMap[event.title].additional;
     }
 
     if (
       additionalCategory2 &&
       additionalCategory2 !== TEAM_BATTLE_CATEGORY_ID
     ) {
-      amount += CATEGORY_PRICES.additional;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      amount += categoryPricesMap[event.title].additional;
     }
 
     return amount - DISCOUNT;
@@ -331,6 +365,10 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
+  const image = imageMap[event.title]?.image || NCRImage;
+
   return (
     <form action={handleSubmit} className="space-y-6">
       <input type="hidden" name="eventId" value={event.documentId} />
@@ -352,10 +390,10 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
           )}
           {currentStep === STEPS.RECEIPT && (
             <CardDescription>
-              <QRCodeDialog />
+              <QRCodeDialog image={image} />
               <br />
               <Image
-                src={QR}
+                src={image}
                 alt="GCash QR Code"
                 width={300}
                 className="rounded-lg"

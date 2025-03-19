@@ -6,10 +6,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import QR from '@/public/gcash-qr.jpg';
 import Image from 'next/image';
 
-export function QRCodeDialog() {
+export function QRCodeDialog({ image }: { image: any }) {
   return (
     <Dialog>
       <DialogTrigger className="text-primary underline underline-offset-4 hover:text-primary/80">
@@ -25,7 +24,7 @@ export function QRCodeDialog() {
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
           <Image
-            src={QR}
+            src={image}
             alt="GCash QR Code"
             width={300}
             className="rounded-lg"
