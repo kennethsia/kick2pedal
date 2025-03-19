@@ -129,6 +129,16 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
     },
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
+  const categoryPrices = categoryPricesMap[event.title] || {
+    primary: 1500,
+    additional: 350,
+  };
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
+  const image = imageMap[event.title]?.image || NCRImage;
+
   // State to store form values between steps
   const [formState, setFormState] = useState({
     category: '',
@@ -155,9 +165,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
 
     // Check primary category
     if (primaryCategory && primaryCategory !== TEAM_BATTLE_CATEGORY_ID) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      amount += categoryPricesMap[event.title].primary;
+      amount += categoryPrices.primary;
     }
 
     // Check additional categories
@@ -165,18 +173,14 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
       additionalCategory1 &&
       additionalCategory1 !== TEAM_BATTLE_CATEGORY_ID
     ) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      amount += categoryPricesMap[event.title].additional;
+      amount += categoryPrices.additional;
     }
 
     if (
       additionalCategory2 &&
       additionalCategory2 !== TEAM_BATTLE_CATEGORY_ID
     ) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      amount += categoryPricesMap[event.title].additional;
+      amount += categoryPrices.additional;
     }
 
     return amount - DISCOUNT;
@@ -365,10 +369,6 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-expect-error
-  const image = imageMap[event.title]?.image || NCRImage;
-
   return (
     <form action={handleSubmit} className="space-y-6">
       <input type="hidden" name="eventId" value={event.documentId} />
@@ -381,10 +381,10 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
           <CardTitle>{getStepTitle()}</CardTitle>
           {currentStep === STEPS.PAYMENT && (
             <CardDescription>
-              Primary category: ₱{CATEGORY_PRICES.primary.toLocaleString()}
+              Primary category: ₱{categoryPrices.primary.toLocaleString()}
               <br />
               Additional categories: ₱
-              {CATEGORY_PRICES.additional.toLocaleString()} each <br />
+              {categoryPrices.additional.toLocaleString()} each <br />
               Team categories: ₱ 1,000 per team (payment will be on site)
             </CardDescription>
           )}
