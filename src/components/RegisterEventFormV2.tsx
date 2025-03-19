@@ -18,7 +18,6 @@ import { createRegistrationAction } from '@/data/actions/registerActions';
 import QR from '@/public/gcash-qr.jpg';
 import Image from 'next/image';
 import { useActionState, useState } from 'react';
-import { QRCodeDialog } from './QRCodeDialog';
 import { StrapiErrors } from './StrapiErrors';
 import SubmitButton from './SubmitButton';
 import { Input } from './ui/input';
@@ -291,7 +290,7 @@ export function RegisterEventFormV2({ event, user }: RegisterEventFormProps) {
         <CardHeader>
           <CardTitle>Proof of payment</CardTitle>
           <CardDescription>
-            <QRCodeDialog />
+            {/* <QRCodeDialog /> */}
             <br />
             <Image
               src={QR}

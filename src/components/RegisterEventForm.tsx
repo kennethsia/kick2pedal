@@ -366,7 +366,7 @@ export function RegisterEventForm({ event, user }: RegisterEventFormProps) {
                       Primary category: ₱1,500 | Additional categories: ₱350
                       each
                     </span>
-                    <QRCodeDialog />
+                    {/* <QRCodeDialog /> */}
                   </FormDescription>
                   <FormControl>
                     <div className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-muted px-3 py-2 text-sm">
