@@ -539,68 +539,80 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
                   </p>
                 )}
               </div>
-              <div className="space-y-4">
-                <Label htmlFor="additional_category_1">
-                  Additional Category # 1
-                </Label>
-                <Select
-                  name="additional_category_1"
-                  value={formState.additional_category_1}
-                  onValueChange={(value) =>
-                    handleFieldChange('additional_category_1', value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your additional category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {event.categories.map((category: any) => (
-                      <SelectItem
-                        key={category.id}
-                        value={category.id.toString()}
-                      >
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {state?.errors?.category && (
-                  <p className="text-sm text-red-500">
-                    {state.errors.category}
-                  </p>
-                )}
-              </div>
-              <div className="space-y-4">
-                <Label htmlFor="additional_category_2">
-                  Additional Category # 2
-                </Label>
-                <Select
-                  name="additional_category_2"
-                  value={formState.additional_category_2}
-                  onValueChange={(value) =>
-                    handleFieldChange('additional_category_2', value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your additional category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {event.categories.map((category: any) => (
-                      <SelectItem
-                        key={category.id}
-                        value={category.id.toString()}
-                      >
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {state?.errors?.category && (
-                  <p className="text-sm text-red-500">
-                    {state.errors.category}
-                  </p>
-                )}
-              </div>
+              {event.categories.some((category) =>
+                category.name.includes('Open'),
+              ) && (
+                <div className="space-y-4">
+                  <Label htmlFor="additional_category_1">
+                    Additional Category # 1
+                  </Label>
+                  <Select
+                    name="additional_category_1"
+                    value={formState.additional_category_1}
+                    onValueChange={(value) =>
+                      handleFieldChange('additional_category_1', value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your additional category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {event.categories
+                        .filter((category) => category.name.includes('Open'))
+                        .map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                  {state?.errors?.category && (
+                    <p className="text-sm text-red-500">
+                      {state.errors.category}
+                    </p>
+                  )}
+                </div>
+              )}
+              {event.categories.some((category) =>
+                category.name.includes('Team'),
+              ) && (
+                <div className="space-y-4">
+                  <Label htmlFor="additional_category_2">
+                    Additional Category # 2
+                  </Label>
+                  <Select
+                    name="additional_category_2"
+                    value={formState.additional_category_2}
+                    onValueChange={(value) =>
+                      handleFieldChange('additional_category_2', value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your additional category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {event.categories
+                        .filter((category) => category.name.includes('Team'))
+                        .map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                  {state?.errors?.category && (
+                    <p className="text-sm text-red-500">
+                      {state.errors.category}
+                    </p>
+                  )}
+                </div>
+              )}
               {validationErrors.category && (
                 <p className="text-sm text-destructive">
                   {validationErrors.category}
