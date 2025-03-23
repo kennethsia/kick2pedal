@@ -385,7 +385,10 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
               <br />
               Additional categories: ₱
               {categoryPrices.additional.toLocaleString()} each <br />
-              Team categories: ₱ 1,000 per team (payment will be on site)
+              {event.categories.some((category) =>
+                category.name.includes('Team'),
+              ) &&
+                'Team categories: ₱ 1,000 per team (payment will be on site)'}
             </CardDescription>
           )}
           {currentStep === STEPS.RECEIPT && (

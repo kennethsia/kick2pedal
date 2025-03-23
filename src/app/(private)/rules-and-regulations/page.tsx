@@ -43,6 +43,13 @@ export default function RulesPage() {
     },
     {
       id: 5,
+      title: 'Categorization System',
+      rules: [
+        'At K2P, participants will be categorized based on their birth month and birth year on the day of race date. ( day of birth not counted )',
+      ],
+    },
+    {
+      id: 6,
       title: 'Additional Regulations',
       rules: [
         "Only competition organizers' cameras will be used for reviewing fouls.",
