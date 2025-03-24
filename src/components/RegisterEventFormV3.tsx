@@ -535,7 +535,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
                       </SelectItem>
                     ))}
                     {event.title === '1st Victor Cup Race' && (
-                      <SelectItem key={68} value={'68'}>
+                      <SelectItem key={86} value={'86'}>
                         {'4-5 year Old Girls'}
                       </SelectItem>
                     )}
