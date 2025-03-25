@@ -5,6 +5,8 @@ import { api } from '@/lib/apiClient';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+const CLOSED_EVENTS = ['1st Victor Cup Race'];
+
 export default async function RegisterPage({ params }: { params: any }) {
   // Remove await from params
   const { eventId } = await params;
@@ -25,6 +27,9 @@ export default async function RegisterPage({ params }: { params: any }) {
     (registration: any) => registration.event.documentId === eventId,
   );
 
+  // Check if event registration is closed
+  const isEventClosed = CLOSED_EVENTS.includes(event.title);
+
   if (isAlreadyRegistered) {
     return (
       <div className="container max-w-2xl py-8">
@@ -33,6 +38,23 @@ export default async function RegisterPage({ params }: { params: any }) {
           <p className="text-muted-foreground">
             You are already registered in this event. if you want to make any
             changes to your registration contact our support team.
+          </p>
+        </div>
+        <Link href="/support">
+          <Button>Contact support</Button>
+        </Link>
+      </div>
+    );
+  }
+
+  if (isEventClosed) {
+    return (
+      <div className="container max-w-2xl py-8">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold">{event.title}</h1>
+          <p className="text-muted-foreground">
+            Registration for this event is closed. If you have any questions
+            please contact our support team.
           </p>
         </div>
         <Link href="/support">
