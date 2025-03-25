@@ -102,8 +102,6 @@ export async function registerUserAction(prevState: any, formData: FormData) {
     };
   }
 
-  const uploadedImage = await uploadImageService(identificationDocument);
-
   const createPayload = {
     data: {
       username: validatedFields.data.username,
@@ -125,14 +123,6 @@ export async function registerUserAction(prevState: any, formData: FormData) {
 
   const userCreateResponseData = await api.user.signup(createPayload.data);
 
-  const updatePayload = {
-    data: {
-      identificationDocument: uploadedImage.data[0].id,
-    },
-  };
-
-  await api.user.update(userCreateResponseData.user.id, updatePayload.data);
-
   if (!userCreateResponseData) {
     return {
       ...prevState,
@@ -149,6 +139,18 @@ export async function registerUserAction(prevState: any, formData: FormData) {
       zodErrors: null,
       message: 'Failed to Register.',
     };
+  }
+  // upload proof of payment
+  const uploadedImage = await uploadImageService(identificationDocument);
+  const updatePayload = {
+    data: {
+      identificationDocument: uploadedImage?.data[0]?.id || null,
+    },
+  };
+
+  // update user with identification document
+  if (updatePayload.data.identificationDocument) {
+    await api.user.update(userCreateResponseData.user?.id, updatePayload.data);
   }
 
   const cookieStore = await cookies();
