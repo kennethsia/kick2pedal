@@ -46,6 +46,10 @@ export default function RulesPage() {
       title: 'Categorization System',
       rules: [
         'At K2P, participants will be categorized based on their birth month and birth year on the day of race date. ( day of birth not counted )',
+        'All participants are allowed to do MULTIPLE REGISTRATIONS',
+        'Register to Open category',
+        `Each subsequent registration must be in an age category ONE LEVEL HIGHER than the participant's current age category. `,
+        'Example: Current age Category: 4B, Next registration: 4A',
       ],
     },
     {
@@ -63,52 +67,85 @@ export default function RulesPage() {
     },
   ];
 
+  // const rules2 = [
+  //   {
+  //     id: 1,
+  //     title: 'Team Composition',
+  //     rules: [
+  //       'Each team shall consist of one (1) participant for the 2-8 years old category.',
+  //       'The participant must be the best rider representing their team in the said category.',
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     title: ' Scoring System',
+  //     rules: [
+  //       "Points will be awarded to each team based on their participant's finishing position in the individual category.",
+  //       'The scoring system shall be as follows:',
+  //       '1st place: 10 points',
+  //       '2nd place: 8 points',
+  //       '3rd place: 6 points',
+  //       '4th place: 4 points',
+  //       '5th place: 2 points',
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Team Championship',
+  //     rules: [
+  //       'The team with the highest consolidated score at the end of the competition shall be declared the Team Champion.',
+  //       'In the event of a tie, the team with the participant who achieved the fastest time in the individual category shall be declared the winner.',
+  //     ],
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'General Rules',
+  //     rules: [
+  //       'All participants must adhere to the rules and regulations of the competition.',
+  //       'The decision of the competition organizers and judges shall be final and binding.',
+  //       'Any form of unsportsmanlike conduct or cheating shall result in disqualification and forfeiture of points.',
+  //     ],
+  //   },
+  //   {
+  //     id: 5,
+  //     title: 'Penalties',
+  //     rules: [
+  //       'Any team found to have violated the rules and regulations of the competition shall be subject to penalties, including but not limited to:',
+  //       'Deduction of points',
+  //       'Disqualification from the competition',
+  //     ],
+  //   },
+  //   {
+  //     id: 6,
+  //     title: 'Penalties',
+  //     rules: [
+  //       'Any team found to have violated the rules and regulations of the competition shall be subject to penalties, including but not limited to:',
+  //       'Deduction of points',
+  //       'Disqualification from the competition',
+  //     ],
+  //   },
+  // ];
+
   const rules2 = [
     {
       id: 1,
-      title: 'Team Composition',
+      title: 'Age Requirements',
       rules: [
-        'Each team shall consist of one (1) participant for the 2-8 years old category.',
-        'The participant must be the best rider representing their team in the said category.',
+        'Teams must consist of members aged 2-7 and 8, with at least ONE FEMALE MEMBER.',
       ],
     },
     {
       id: 2,
-      title: ' Scoring System',
+      title: ' Strategy and Order',
       rules: [
-        "Points will be awarded to each team based on their participant's finishing position in the individual category.",
-        'The scoring system shall be as follows:',
-        '1st place: 10 points',
-        '2nd place: 8 points',
-        '3rd place: 6 points',
-        '4th place: 4 points',
-        '5th place: 2 points',
+        'Teams can strategize and decide who will run first, as long as the 2-YEAR-OLD MEMBER RUNS LAST.',
       ],
     },
     {
       id: 3,
-      title: 'Team Championship',
+      title: 'Winning Condition',
       rules: [
-        'The team with the highest consolidated score at the end of the competition shall be declared the Team Champion.',
-        'In the event of a tie, the team with the participant who achieved the fastest time in the individual category shall be declared the winner.',
-      ],
-    },
-    {
-      id: 4,
-      title: 'General Rules',
-      rules: [
-        'All participants must adhere to the rules and regulations of the competition.',
-        'The decision of the competition organizers and judges shall be final and binding.',
-        'Any form of unsportsmanlike conduct or cheating shall result in disqualification and forfeiture of points.',
-      ],
-    },
-    {
-      id: 5,
-      title: 'Penalties',
-      rules: [
-        'Any team found to have violated the rules and regulations of the competition shall be subject to penalties, including but not limited to:',
-        'Deduction of points',
-        'Disqualification from the competition',
+        'The FASTEST TEAM to complete the relay will be declared the winner.',
       ],
     },
   ];
@@ -141,9 +178,7 @@ export default function RulesPage() {
         where applicable.
       </div>
 
-      <h1 className="text-3xl font-bold my-8">
-        K2P Runbike Team Battle Rules and Regulations
-      </h1>
+      <h1 className="text-3xl font-bold my-8">K2P Runbike TEAM RELAY RULES</h1>
 
       <div className="grid gap-6">
         {rules2.map((section) => (
