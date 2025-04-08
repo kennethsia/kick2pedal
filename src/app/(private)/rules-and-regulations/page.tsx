@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Rules from '@/components/Rules';
+import { Button } from '@/components/ui/button';
 
 export default function RulesPage() {
   const rules = [
@@ -152,9 +153,20 @@ export default function RulesPage() {
 
   return (
     <div className="container py-8">
-      <h1 className="text-3xl font-bold mb-8">Rules and Regulations</h1>
-
-      <div className="grid gap-6">
+      <div className="flex flex-row gap-3 justify-start">
+        <h1 className="text-3xl font-bold mb-8">Rules and Regulations</h1>
+        <Button>
+          <a
+            href="https://docs.google.com/document/d/1ByRPTQnisinm_WBd7YxxkBKhb-IjU1EG3_vdnIkAeUA/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View in new tab
+          </a>
+        </Button>
+      </div>
+      <Rules />
+      {/* <div className="grid gap-6">
         {rules.map((section) => (
           <Card key={section.id}>
             <CardHeader>
@@ -171,15 +183,12 @@ export default function RulesPage() {
             </CardContent>
           </Card>
         ))}
-      </div>
-
+      </div> */}
       <div className="mt-8 text-sm text-muted-foreground text-center">
         Note: All rules are subject to referee interpretation and discretion
         where applicable.
       </div>
-
-      <h1 className="text-3xl font-bold my-8">K2P Runbike TEAM RELAY RULES</h1>
-
+      {/* <h1 className="text-3xl font-bold my-8">K2P Runbike TEAM RELAY RULES</h1>
       <div className="grid gap-6">
         {rules2.map((section) => (
           <Card key={section.id}>
@@ -198,12 +207,11 @@ export default function RulesPage() {
           </Card>
         ))}
       </div>
-
       <div className="mt-8 text-sm text-muted-foreground text-center">
         By participating in the team battle, all teams acknowledge that they
         have read, understood, and agreed to abide by these rules and
         regulations.
-      </div>
+      </div> */}
     </div>
   );
 }
