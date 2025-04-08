@@ -137,7 +137,7 @@ export const api = {
       ),
     listAll: () =>
       fetchClient<Registration[]>(
-        `/registrations?populate=*&pagination[page]=1&pagination[pageSize]=200`,
+        `/registrations?populate=*&pagination[page]=1&pagination[pageSize]=500`,
       ),
   },
 
