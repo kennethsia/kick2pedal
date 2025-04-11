@@ -5,7 +5,10 @@ import { api } from '@/lib/apiClient';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-const CLOSED_EVENTS = ['1st Victor Cup Race'];
+const CLOSED_EVENTS = [
+  '1st Victor Cup Race',
+  'Kick2Pedal Mindanao - Northtown - Davao City',
+];
 
 export default async function RegisterPage({ params }: { params: any }) {
   // Remove await from params
