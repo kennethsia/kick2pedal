@@ -115,7 +115,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
         additional: 350,
       },
       FOREIGN: {
-        primary: 200,
+        primary: 1800,
         additional: 350,
       },
     },
