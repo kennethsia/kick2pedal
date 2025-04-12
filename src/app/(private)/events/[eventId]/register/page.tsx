@@ -1,4 +1,5 @@
 import { RegisterEventFormV3 } from '@/components/RegisterEventFormV3';
+import { RegisterEventFormV4 } from '@/components/RegisterEventFormV4';
 import { Button } from '@/components/ui/button';
 import { getUserMeLoader } from '@/data/services/getUserMeLoader';
 import { api } from '@/lib/apiClient';
@@ -75,7 +76,12 @@ export default async function RegisterPage({ params }: { params: any }) {
           Complete your registration details below
         </p>
       </div>
-      <RegisterEventFormV3 event={event} user={user} />
+      {event.title ===
+      'Kick2Pedal - ASEAN International Runbike Championship' ? (
+        <RegisterEventFormV4 event={event} user={user} />
+      ) : (
+        <RegisterEventFormV3 event={event} user={user} />
+      )}
     </div>
   );
 }

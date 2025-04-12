@@ -13,7 +13,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Home() {
-  const { data: events } = await api.events.list();
+  const { data: allEvents } = await api.events.list();
+  const events = allEvents.filter(
+    (event: any) => new Date(event.date) > new Date(),
+  );
 
   return (
     <>
