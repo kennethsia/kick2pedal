@@ -109,20 +109,30 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
   }>({});
 
   const categoryPricesMap = {
-    'Kick2Pedal - ASEAN International Runbike Championship': {
+    'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': {
       FILIPINO: {
         primary: 1500,
-        additional: 350,
+        additional: 500,
       },
       FOREIGN: {
         primary: 1800,
-        additional: 350,
+        additional: 500,
+      },
+    },
+    'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship': {
+      FILIPINO: {
+        primary: 1500,
+        additional: 500,
+      },
+      FOREIGN: {
+        primary: 1800,
+        additional: 500,
       },
     },
   };
 
   const imageMap = {
-    'Kick2Pedal - ASEAN International Runbike Championship': {
+    'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': {
       FILIPINO: {
         image: NCRQRImage,
       },
@@ -130,6 +140,47 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
         image: PayPalImage,
       },
     },
+    'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship': {
+      FILIPINO: {
+        image: NCRQRImage,
+      },
+      FOREIGN: {
+        image: PayPalImage,
+      },
+    },
+  };
+
+  const categoriesMap = {
+    'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': [
+      { id: 115, name: '2017 Mix' },
+      { id: 112, name: '2018 Mix' },
+      { id: 110, name: '2020 Mix' },
+      { id: 108, name: '2021 Mix' },
+      { id: 106, name: '2022 Mix' },
+      { id: 104, name: '2023 Mix' },
+      { id: 119, name: '2019-2017 All Girls' },
+      { id: 117, name: '2020-2021 All Girls' },
+      { id: 98, name: 'Open Age Small 2020-2022 Mix' },
+      { id: 100, name: 'Open Age Big 2016-2019 Mix' },
+      { id: 102, name: 'Open Age Extra 2013-2015 Mix' },
+    ],
+    'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship': [
+      { id: 30, name: '(2A) 2.7-3.0 Years Mix' },
+      { id: 32, name: '(2B) 2.1-2.6 Years Mix' },
+      { id: 36, name: '(3A) 3.7-4.0 Years Mix' },
+      { id: 34, name: '(3B) 3.1-3.6 Years Mix' },
+      { id: 40, name: '(4A) 4.7-4.11 Years Mix' },
+      { id: 38, name: '(4B) 4.1-4.6 Years Mix' },
+      { id: 88, name: '(5A) 5.7-6.0 Years' },
+      { id: 90, name: '(5B) 5.1-5.6 Years' },
+      { id: 94, name: '(6A) 6.7-7.0 Years' },
+      { id: 92, name: '(6B) 6.1-6.6 Years' },
+      { id: 42, name: '7-8 Years Mix' },
+      { id: 96, name: '9-12 Years Mix (Age 9.1-13.0 Year)' },
+      { id: 98, name: 'Open Age Small 2020-2022 Mix' },
+      { id: 100, name: 'Open Age Big 2016-2019 Mix' },
+      { id: 102, name: 'Open Age Extra 2013-2015 Mix' },
+    ],
   };
 
   const categoryPrices =
@@ -145,6 +196,9 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
         imageMap[event.title].FILIPINO
       : //@ts-expect-error asdasdas
         imageMap[event.title].FOREIGN;
+
+  //@ts-expect-error asdasdas
+  const categories = categoriesMap[event.title];
 
   // State to store form values between steps
   const [formState, setFormState] = useState({
@@ -532,7 +586,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
           {currentStep === STEPS.CATEGORIES && (
             <div className="space-y-6">
               <div className="space-y-4">
-                <Label htmlFor="category">Day 1 Category</Label>
+                <Label htmlFor="category">Primary Category</Label>
                 <Select
                   name="category"
                   required
@@ -542,10 +596,10 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select your Day 1 category" />
+                    <SelectValue placeholder="Select your primary category" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categoriesDay1.map((category: any) => (
+                    {categories.map((category: any) => (
                       <SelectItem
                         key={category.id}
                         value={category.id.toString()}
@@ -561,36 +615,72 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
                   </p>
                 )}
               </div>
-
-              <div className="space-y-4">
-                <Label htmlFor="additional_category_1">Day 2 Category</Label>
-                <Select
-                  name="additional_category_1"
-                  value={formState.additional_category_1}
-                  onValueChange={(value) =>
-                    handleFieldChange('additional_category_1', value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your Day 2 category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categoriesDay2.map((category: any) => (
-                      <SelectItem
-                        key={category.id}
-                        value={category.id.toString()}
-                      >
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {state?.errors?.category && (
-                  <p className="text-sm text-red-500">
-                    {state.errors.category}
-                  </p>
-                )}
-              </div>
+              {
+                <div className="space-y-4">
+                  <Label htmlFor="additional_category_1">
+                    Additional Category # 1
+                  </Label>
+                  <Select
+                    name="additional_category_1"
+                    value={formState.additional_category_1}
+                    onValueChange={(value) =>
+                      handleFieldChange('additional_category_1', value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your additional category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((category: any) => (
+                        <SelectItem
+                          key={category.id}
+                          value={category.id.toString()}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {state?.errors?.category && (
+                    <p className="text-sm text-red-500">
+                      {state.errors.category}
+                    </p>
+                  )}
+                </div>
+              }
+              {
+                <div className="space-y-4">
+                  <Label htmlFor="additional_category_2">
+                    Additional Category # 2
+                  </Label>
+                  <Select
+                    name="additional_category_2"
+                    value={formState.additional_category_2}
+                    onValueChange={(value) =>
+                      handleFieldChange('additional_category_2', value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your additional category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((category: any) => (
+                        <SelectItem
+                          key={category.id}
+                          value={category.id.toString()}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {state?.errors?.category && (
+                    <p className="text-sm text-red-500">
+                      {state.errors.category}
+                    </p>
+                  )}
+                </div>
+              }
               {validationErrors.category && (
                 <p className="text-sm text-destructive">
                   {validationErrors.category}

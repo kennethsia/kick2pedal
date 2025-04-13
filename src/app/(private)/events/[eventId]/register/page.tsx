@@ -77,7 +77,9 @@ export default async function RegisterPage({ params }: { params: any }) {
         </p>
       </div>
       {event.title ===
-      'Kick2Pedal - ASEAN International Runbike Championship' ? (
+        'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship' ||
+      event.title ===
+        'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship' ? (
         <RegisterEventFormV4 event={event} user={user} />
       ) : (
         <RegisterEventFormV3 event={event} user={user} />
