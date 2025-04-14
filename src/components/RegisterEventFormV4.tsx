@@ -47,6 +47,7 @@ interface RegisterEventFormProps {
 const categoriesDay1 = [
   { id: 115, name: '2017 Mix' },
   { id: 112, name: '2018 Mix' },
+  { id: 124, name: '2019 Mix' },
   { id: 110, name: '2020 Mix' },
   { id: 108, name: '2021 Mix' },
   { id: 106, name: '2022 Mix' },
@@ -63,7 +64,7 @@ const categoriesDay2 = [
   { id: 32, name: '(2B) 2.1-2.6 Years Mix' },
   { id: 36, name: '(3A) 3.7-4.0 Years Mix' },
   { id: 34, name: '(3B) 3.1-3.6 Years Mix' },
-  { id: 40, name: '(4A) 4.7-4.11 Years Mix' },
+  { id: 40, name: '(4A) 4.7-5.0 Years Mix' },
   { id: 38, name: '(4B) 4.1-4.6 Years Mix' },
   { id: 88, name: '(5A) 5.7-6.0 Years' },
   { id: 90, name: '(5B) 5.1-5.6 Years' },
@@ -154,6 +155,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
     'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': [
       { id: 115, name: '2017 Mix' },
       { id: 112, name: '2018 Mix' },
+      { id: 124, name: '2019 Mix' },
       { id: 110, name: '2020 Mix' },
       { id: 108, name: '2021 Mix' },
       { id: 106, name: '2022 Mix' },
@@ -169,7 +171,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
       { id: 32, name: '(2B) 2.1-2.6 Years Mix' },
       { id: 36, name: '(3A) 3.7-4.0 Years Mix' },
       { id: 34, name: '(3B) 3.1-3.6 Years Mix' },
-      { id: 40, name: '(4A) 4.7-4.11 Years Mix' },
+      { id: 40, name: '(4A) 4.7-5.0 Years Mix' },
       { id: 38, name: '(4B) 4.1-4.6 Years Mix' },
       { id: 88, name: '(5A) 5.7-6.0 Years' },
       { id: 90, name: '(5B) 5.1-5.6 Years' },
