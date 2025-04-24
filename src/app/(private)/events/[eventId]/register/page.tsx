@@ -9,7 +9,6 @@ import { notFound } from 'next/navigation';
 const CLOSED_EVENTS = [
   '1st Victor Cup Race',
   'Kick2Pedal Mindanao - Northtown - Davao City',
-  'Kick2Pedal Mindanao - Avia Estate - Sarangani Province',
 ];
 
 export default async function RegisterPage({ params }: { params: any }) {
