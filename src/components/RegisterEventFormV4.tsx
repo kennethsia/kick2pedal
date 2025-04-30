@@ -46,7 +46,7 @@ interface RegisterEventFormProps {
 
 const categoriesDay1 = [
   { id: 115, name: '2017 Mix' },
-  { id: 112, name: '2018 Mix' },
+  { id: 126, name: '2018 Mix' },
   { id: 124, name: '2019 Mix' },
   { id: 110, name: '2020 Mix' },
   { id: 108, name: '2021 Mix' },
@@ -154,7 +154,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
   const categoriesMap = {
     'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': [
       { id: 115, name: '2017 Mix' },
-      { id: 112, name: '2018 Mix' },
+      { id: 126, name: '2018 Mix' },
       { id: 124, name: '2019 Mix' },
       { id: 110, name: '2020 Mix' },
       { id: 108, name: '2021 Mix' },
