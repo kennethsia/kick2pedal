@@ -230,6 +230,7 @@ export function RegistrationList() {
         <TableHeader>
           <TableRow>
             {/* <TableHead>ID</TableHead> */}
+            <TableHead>Event ID</TableHead>
             <TableHead>Event</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>DoB</TableHead>
@@ -254,6 +255,7 @@ export function RegistrationList() {
             registrations.map((registration) => (
               <TableRow key={registration.id}>
                 {/* <TableCell>{registration.documentId}</TableCell> */}
+                <TableCell>{registration.event.id}</TableCell>
                 <TableCell>{registration.event.title}</TableCell>
                 <TableCell>
                   {registration.user.firstName} {registration.user.lastName}
