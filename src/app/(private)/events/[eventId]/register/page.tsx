@@ -10,6 +10,8 @@ const CLOSED_EVENTS = [
   '1st Victor Cup Race',
   'Kick2Pedal Mindanao - Northtown - Davao City',
   'Kick2Pedal Mindanao - Avia Estate - Sarangani Province',
+  'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship',
+  'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship',
 ];
 
 export default async function RegisterPage({ params }: { params: any }) {
