@@ -107,6 +107,10 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
       primary: 1500,
       additional: 350,
     },
+    'K2P Runbike Ride of the Victor Challenge': {
+      primary: 1500,
+      additional: 350,
+    },
     'Kick2Pedal Mindanao - Avia Estate - Sarangani Province': {
       primary: 750,
       additional: 200,
@@ -119,6 +123,9 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
 
   const imageMap = {
     '1st Victor Cup Race': {
+      image: NCRQRImage,
+    },
+    'K2P Runbike Ride of the Victor Challenge': {
       image: NCRQRImage,
     },
     'Kick2Pedal Mindanao - Avia Estate - Sarangani Province': {
@@ -137,7 +144,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
   };
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-expect-error
-  const image = imageMap[event.title]?.image || NCRImage;
+  const image = imageMap[event.title]?.image || NCRQRImage;
 
   // State to store form values between steps
   const [formState, setFormState] = useState({
