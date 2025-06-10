@@ -105,11 +105,11 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
   const categoryPricesMap = {
     '1st Victor Cup Race': {
       primary: 1500,
-      additional: 350,
+      additional: 500,
     },
     'K2P Runbike Ride of the Victor Challenge': {
       primary: 1500,
-      additional: 350,
+      additional: 500,
     },
     'Kick2Pedal Mindanao - Avia Estate - Sarangani Province': {
       primary: 750,
@@ -140,7 +140,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
   //@ts-expect-error
   const categoryPrices = categoryPricesMap[event.title] || {
     primary: 1500,
-    additional: 350,
+    additional: 500,
   };
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-expect-error
@@ -554,45 +554,39 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
                   </p>
                 )}
               </div>
+              <div className="space-y-4">
+                <Label htmlFor="additional_category_1">
+                  Additional Category # 1
+                </Label>
+                <Select
+                  name="additional_category_1"
+                  value={formState.additional_category_1}
+                  onValueChange={(value) =>
+                    handleFieldChange('additional_category_1', value)
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your additional category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {event.categories.map((category) => (
+                      <SelectItem
+                        key={category.id}
+                        value={category.id.toString()}
+                      >
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {state?.errors?.category && (
+                  <p className="text-sm text-red-500">
+                    {state.errors.category}
+                  </p>
+                )}
+              </div>
               {event.categories.some((category) =>
                 category.name.includes('Open'),
-              ) && (
-                <div className="space-y-4">
-                  <Label htmlFor="additional_category_1">
-                    Additional Category # 1
-                  </Label>
-                  <Select
-                    name="additional_category_1"
-                    value={formState.additional_category_1}
-                    onValueChange={(value) =>
-                      handleFieldChange('additional_category_1', value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your additional category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {event.categories
-                        .filter((category) => category.name.includes('Open'))
-                        .map((category) => (
-                          <SelectItem
-                            key={category.id}
-                            value={category.id.toString()}
-                          >
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
-                  {state?.errors?.category && (
-                    <p className="text-sm text-red-500">
-                      {state.errors.category}
-                    </p>
-                  )}
-                </div>
-              )}
-              {event.categories.some((category) =>
-                category.name.includes('Team'),
               ) && (
                 <div className="space-y-4">
                   <Label htmlFor="additional_category_2">
@@ -610,7 +604,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
                     </SelectTrigger>
                     <SelectContent>
                       {event.categories
-                        .filter((category) => category.name.includes('Team'))
+                        .filter((category) => category.name.includes('Open'))
                         .map((category) => (
                           <SelectItem
                             key={category.id}
