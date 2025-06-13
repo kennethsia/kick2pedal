@@ -143,7 +143,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
     if (category.name === '6 Years old Mix') {
       return '6 Years old Mix (6.1 - 7.0 years)';
     }
-    if (category.name === '7-8 Years old Mix') {
+    if (category.name === '7-8 Years Mix') {
       return '7-8 Years old Mix (7.1 - 9.0 years)';
     }
     return category.name;
