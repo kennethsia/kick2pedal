@@ -136,6 +136,19 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
     },
   };
 
+  const getCategorylabel = (category: any) => {
+    if (category.name === '5 Years old Mix') {
+      return '5 Years old Mix (5.1 - 6.0 years)';
+    }
+    if (category.name === '6 Years old Mix') {
+      return '6 Years old Mix (6.1 - 7.0 years)';
+    }
+    if (category.name === '7-8 Years old Mix') {
+      return '7-8 Years old Mix (7.1 - 9.0 years)';
+    }
+    return category.name;
+  };
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-expect-error
   const categoryPrices = categoryPricesMap[event.title] || {
@@ -538,7 +551,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
                         key={category.id}
                         value={category.id.toString()}
                       >
-                        {category.name}
+                        {getCategorylabel(category)}
                       </SelectItem>
                     ))}
                     {event.title === '1st Victor Cup Race' && (
@@ -574,7 +587,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
                         key={category.id}
                         value={category.id.toString()}
                       >
-                        {category.name}
+                        {getCategorylabel(category)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -610,7 +623,7 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
                             key={category.id}
                             value={category.id.toString()}
                           >
-                            {category.name}
+                            {getCategorylabel(category)}
                           </SelectItem>
                         ))}
                     </SelectContent>
