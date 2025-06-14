@@ -146,6 +146,9 @@ export function RegisterEventFormV3({ event, user }: RegisterEventFormProps) {
     if (category.name === '7-8 Years Mix') {
       return '7-8 Years old Mix (7.1 - 9.0 years)';
     }
+    if (category.name === '(4A) 4.7-4.11 Years Mix') {
+      return '(4A) 4.7-5.0 Years Mix';
+    }
     return category.name;
   };
 
