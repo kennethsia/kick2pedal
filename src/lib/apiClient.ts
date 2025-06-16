@@ -136,8 +136,11 @@ export const api = {
         `/registrations?filters[user][documentId][$eq]=${id}&populate=*`,
       ),
     listAll: () =>
+      // fetchClient<Registration[]>(
+      //   `/registrations?populate=*&pagination[page]=1&pagination[pageSize]=500&filters[event][id][$in][0]=73&filters[event][id][$in][1]=76&sort[0]=createdAt:desc`,
+      // ),
       fetchClient<Registration[]>(
-        `/registrations?populate=*&pagination[page]=1&pagination[pageSize]=500&filters[event][id][$in][0]=73&filters[event][id][$in][1]=76&sort[0]=createdAt:desc`,
+        `/registrations?populate=*&pagination[page]=1&pagination[pageSize]=500&sort[0]=createdAt:desc`,
       ),
   },
 

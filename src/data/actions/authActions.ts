@@ -4,6 +4,7 @@ import { api } from '@/lib/apiClient';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
+import { forgotPasswordRequest } from '../services/forgotPassword';
 import { uploadImageService } from '../services/uploadImage';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
@@ -222,4 +223,48 @@ export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.set('jwt', '', { ...config, maxAge: 0 });
   redirect('/');
+}
+
+export async function forgotPasswordAction(
+  initialState: any,
+  formData: FormData,
+) {
+  // Get email from form data
+  const email = formData.get('email');
+
+  const errors: any = {};
+
+  // Validate the form data
+  if (!email) errors.email = 'Email is required';
+  if (errors.email) {
+    return {
+      errors,
+      values: { email },
+      message: 'Error submitting form',
+      success: false,
+    };
+  }
+
+  console.log('Requesting password reset for:', email);
+
+  // Reqest password reset link
+  const res: any = await forgotPasswordRequest(email as string);
+
+  console.log('Response from password reset request:', res);
+
+  if (res.statusText !== 'OK') {
+    return {
+      errors: {},
+      values: { email },
+      message: res?.statusText || res,
+      success: false,
+    };
+  }
+
+  return {
+    errors: {},
+    values: { email },
+    message: 'Password reset email sent',
+    success: true,
+  };
 }
