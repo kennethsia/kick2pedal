@@ -90,6 +90,11 @@ export function LoginForm({
           Sign up
         </Link>
       </div>
+      <div className="text-center text-sm">
+        <Link href="/forgot-password" className="underline underline-offset-4">
+          Forgot your password?
+        </Link>
+      </div>
     </form>
   );
 }
