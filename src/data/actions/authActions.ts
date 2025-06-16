@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { forgotPasswordRequest } from '../services/forgotPassword';
+import { resetPasswordRequest } from '../services/resetPassword';
 import { uploadImageService } from '../services/uploadImage';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
@@ -265,6 +266,56 @@ export async function forgotPasswordAction(
     errors: {},
     values: { email },
     message: 'Password reset email sent',
+    success: true,
+  };
+}
+
+export async function resetPasswordAction(
+  initialState: any,
+  formData: FormData,
+) {
+  const password = formData.get('password'); // password
+  const code = formData.get('code'); // code
+  const confirmPassword = formData.get('confirmPassword'); // confirm password
+
+  const errors: any = {};
+
+  if (!password) errors.password = 'Password is required';
+  if (!confirmPassword) errors.confirmPassword = 'Confirm password is required';
+  if (!code) errors.code = 'Error resetting password';
+  if (password && confirmPassword && password !== confirmPassword) {
+    errors.confirmPassword = 'Passwords do not match';
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return {
+      errors,
+      values: { password, confirmPassword, code },
+      message: 'Error submitting form',
+      success: false,
+    };
+  }
+
+  // Call request
+  const res: any = await resetPasswordRequest({
+    code,
+    password,
+    confirmPassword,
+  });
+
+  if (res?.statusText !== 'OK') {
+    return {
+      errors: {},
+      values: { password, confirmPassword, code },
+      message: res?.statusText || res,
+      success: false,
+    };
+  }
+
+  return {
+    errors: {},
+    values: {},
+    message: 'Reset password successful!',
     success: true,
   };
 }
