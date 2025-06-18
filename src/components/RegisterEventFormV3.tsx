@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/select';
 import { createRegistrationAction } from '@/data/actions/registerActions';
 import MindanaoQRImage from '@/public/gcash-qr-mindanao.jpg';
-import NCRQRImage from '@/public/gcash-qr.jpg';
+import NCRQRImage from '@/public/gotymeQR.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useActionState, useEffect, useState } from 'react';

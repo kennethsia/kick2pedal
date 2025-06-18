@@ -23,12 +23,7 @@ export function QRCodeDialog({ image }: { image: any }) {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
-          <Image
-            src={image}
-            alt="GCash QR Code"
-            width={300}
-            className="rounded-lg"
-          />
+          <Image src={image} alt="QR Code" width={300} className="rounded-lg" />
           {/* <div className="text-center space-y-2">
             <p className="font-medium">GCash Account Details</p>
             <p className="text-sm text-muted-foreground">
