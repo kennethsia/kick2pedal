@@ -44,39 +44,6 @@ interface RegisterEventFormProps {
   };
 }
 
-const categoriesDay1 = [
-  { id: 115, name: '2017 Mix' },
-  { id: 126, name: '2018 Mix' },
-  { id: 124, name: '2019 Mix' },
-  { id: 110, name: '2020 Mix' },
-  { id: 108, name: '2021 Mix' },
-  { id: 106, name: '2022 Mix' },
-  { id: 104, name: '2023 Mix' },
-  { id: 119, name: '2019-2017 All Girls' },
-  { id: 117, name: '2020-2021 All Girls' },
-  { id: 98, name: 'Open Age Small 2020-2022 Mix' },
-  { id: 100, name: 'Open Age Big 2016-2019 Mix' },
-  { id: 102, name: 'Open Age Extra 2013-2015 Mix' },
-];
-
-const categoriesDay2 = [
-  { id: 30, name: '(2A) 2.7-3.0 Years Mix' },
-  { id: 32, name: '(2B) 2.1-2.6 Years Mix' },
-  { id: 36, name: '(3A) 3.7-4.0 Years Mix' },
-  { id: 34, name: '(3B) 3.1-3.6 Years Mix' },
-  { id: 40, name: '(4A) 4.7-5.0 Years Mix' },
-  { id: 38, name: '(4B) 4.1-4.6 Years Mix' },
-  { id: 88, name: '(5A) 5.7-6.0 Years' },
-  { id: 90, name: '(5B) 5.1-5.6 Years' },
-  { id: 94, name: '(6A) 6.7-7.0 Years' },
-  { id: 92, name: '(6B) 6.1-6.6 Years' },
-  { id: 42, name: '7-8 Years Mix' },
-  { id: 96, name: '9-12 Years Mix (Age 9.1-13.0 Year)' },
-  { id: 98, name: 'Open Age Small 2020-2022 Mix' },
-  { id: 100, name: 'Open Age Big 2016-2019 Mix' },
-  { id: 102, name: 'Open Age Extra 2013-2015 Mix' },
-];
-
 const DISCOUNT = 0;
 
 // Add this constant near other constants
@@ -110,7 +77,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
   }>({});
 
   const categoryPricesMap = {
-    'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': {
+    'Day 1 - K2P Runbike Racing International Championship': {
       FILIPINO: {
         primary: 1500,
         additional: 500,
@@ -120,7 +87,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
         additional: 500,
       },
     },
-    'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship': {
+    'Day 2 - K2P Runbike Racing International Championship': {
       FILIPINO: {
         primary: 1500,
         additional: 500,
@@ -133,7 +100,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
   };
 
   const imageMap = {
-    'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': {
+    'Day 1 - K2P Runbike Racing International Championship': {
       FILIPINO: {
         image: NCRQRImage,
       },
@@ -141,7 +108,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
         image: PayPalImage,
       },
     },
-    'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship': {
+    'Day 2 - K2P Runbike Racing International Championship': {
       FILIPINO: {
         image: NCRQRImage,
       },
@@ -152,7 +119,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
   };
 
   const categoriesMap = {
-    'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship': [
+    'Day 1 - K2P Runbike Racing International Championship': [
       { id: 115, name: '2017 Mix' },
       { id: 126, name: '2018 Mix' },
       { id: 124, name: '2019 Mix' },
@@ -166,7 +133,7 @@ export function RegisterEventFormV4({ event, user }: RegisterEventFormProps) {
       { id: 100, name: 'Open Age Big 2016-2019 Mix' },
       { id: 102, name: 'Open Age Extra 2013-2015 Mix' },
     ],
-    'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship': [
+    'Day 2 - K2P Runbike Racing International Championship': [
       { id: 30, name: '(2A) 2.7-3.0 Years Mix' },
       { id: 32, name: '(2B) 2.1-2.6 Years Mix' },
       { id: 36, name: '(3A) 3.7-4.0 Years Mix' },
