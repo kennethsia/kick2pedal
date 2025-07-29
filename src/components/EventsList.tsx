@@ -111,10 +111,10 @@ export default async function Events() {
                     <UsersIcon className="h-4 w-4" />
                     <span>{event.maxCapacity} spots</span>
                   </div> */}
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <CalendarIcon className="h-4 w-4" />
                     <span>{new Date(event.date).toLocaleDateString()}</span>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
