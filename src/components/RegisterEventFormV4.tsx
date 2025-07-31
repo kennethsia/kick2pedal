@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createRegistrationAction } from '@/data/actions/registerActions';
-import NCRQRImage from '@/public/gcash-qr.jpg';
+import NCRQRImage from '@/public/gotymeQR.png';
 import PayPalImage from '@/public/paypalme.png';
 import Image from 'next/image';
 import Link from 'next/link';
