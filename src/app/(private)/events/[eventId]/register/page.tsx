@@ -13,6 +13,8 @@ const CLOSED_EVENTS = [
   'Kick2Pedal - DAY 1 - ASEAN International Runbike Championship',
   'Kick2Pedal - DAY 2 - ASEAN International Runbike Championship',
   'K2P Runbike Ride of the Victor Challenge',
+  'Day 1 - K2P Runbike Racing International Championship',
+  'Day 1 - K2P Runbike Racing International Championship',
 ];
 
 export default async function RegisterPage({ params }: { params: any }) {
